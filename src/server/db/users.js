@@ -1,21 +1,32 @@
 const db = require('./client')
 const bcrypt = require('bcrypt');
-const SALT_COUNT = 10;
+const SALT_COUNT = 12;
 
-const createUser = async({ name='first last', email, password }) => {
-    const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-    try {
-        const { rows: [user ] } = await db.query(`
-        INSERT INTO users(name, email, password)
-        VALUES($1, $2, $3)
-        ON CONFLICT (email) DO NOTHING
-        RETURNING *`, [name, email, hashedPassword]);
+// NICK FUNCTION
+const createUser = async ({ username, password }) => {
+    const SQL = `--sql
+    INSERT INTO users(id, username, password)
+    VALUES ($1, $2, $3)
+    RETURNING *
+    `;
+    const response = await client.query(SQL, [uuid.v4(), username , await bcrypt.hash(password, SALT_COUNT)]);
+    return response.rows[0];
+  };
+  
+// const createUser = async({ name='first last', email, password }) => {
+//     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+//     try {
+//         const { rows: [user ] } = await db.query(`
+//         INSERT INTO users(name, email, password)
+//         VALUES($1, $2, $3)
+//         ON CONFLICT (email) DO NOTHING
+//         RETURNING *`, [name, email, hashedPassword]);
 
-        return user;
-    } catch (err) {
-        throw err;
-    }
-}
+//         return user;
+//     } catch (err) {
+//         throw err;
+//     }
+// }
 
 const getUser = async({email, password}) => {
     if(!email || !password) {
