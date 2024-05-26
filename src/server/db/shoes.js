@@ -1,11 +1,16 @@
 const db = require("./client");
+const uuid = require('uuid');
 
-const createShoe = async ({ brand, model, color, condition, price, userId }) => {
+const createShoe = async ({ brand, size, price, color}) => {
     const SQL = `--sql
-    INSERT INTO shoes(id, brand, model, color, condition, price, userId)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    INSERT INTO shoes(id, brand, size, price, color)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING *
     `;
-    const response = await db.query(SQL, [uuid.v4(), brand, model, color, condition, price, userId]);
+    const response = await db.query(SQL, [uuid.v4(), brand, size, price, color]);
     return response.rows[0];
+  };
+
+  module.exports = {
+    createShoe,
   };

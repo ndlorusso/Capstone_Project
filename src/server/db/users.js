@@ -4,13 +4,13 @@ const uuid = require('uuid');
 const SALT_COUNT = 12;
 
 // NICK FUNCTION
-const createUser = async ({ is_admin, username, password }) => {
+const createUser = async ({ is_admin, username, email, password }) => {
     const SQL = `--sql
-    INSERT INTO users(id, is_admin, username, password)
-    VALUES ($1, $2, $3, $4)
+    INSERT INTO users(id, is_admin, username, email, password)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING *
     `;
-    const response = await db.query(SQL, [uuid.v4(), is_admin, username , await bcrypt.hash(password, SALT_COUNT)]);
+    const response = await db.query(SQL, [uuid.v4(), is_admin, username, email, await bcrypt.hash(password, SALT_COUNT)]);
     return response.rows[0];
   };
   
