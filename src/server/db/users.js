@@ -1,15 +1,16 @@
 const db = require('./client')
 const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 const SALT_COUNT = 12;
 
 // NICK FUNCTION
-const createUser = async ({ username, password }) => {
+const createUser = async ({ is_admin, username, password }) => {
     const SQL = `--sql
-    INSERT INTO users(id, username, password)
-    VALUES ($1, $2, $3)
+    INSERT INTO users(id, is_admin, username, password)
+    VALUES ($1, $2, $3, $4)
     RETURNING *
     `;
-    const response = await client.query(SQL, [uuid.v4(), username , await bcrypt.hash(password, SALT_COUNT)]);
+    const response = await db.query(SQL, [uuid.v4(), is_admin, username , await bcrypt.hash(password, SALT_COUNT)]);
     return response.rows[0];
   };
   
@@ -63,6 +64,7 @@ const getUserByEmail = async(email) => {
 
 module.exports = {
     createUser,
+    // createShoe,
     getUser,
     getUserByEmail
 };

@@ -11,44 +11,45 @@ const createTables = async () => {
   DROP TABLE IF EXISTS shoes;
   DROP TABLE IF EXISTS users;
 
-  CREATE TABLE users(
-    id UUID PRIMARY KEY,
-    displayname VARCHAR(20) UNIQUE NOT NULL,
-    email VARCHAR(20) UNIQUE NOT NULL,
-    password VARCHAR(20) NULL,
-    is_admin BOOLEAN DEFAULT false
-   );
+CREATE TABLE users(
+  id UUID PRIMARY KEY,
+  is_admin BOOLEAN DEFAULT false,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL
+  );
 
-   CREATE TABLE shoes(
-    id UUID PRIMARY KEY,
-    brand VARCHAR(20) NOT NULL
-   );
+CREATE TABLE shoes(
+  id UUID PRIMARY KEY,
+  brand VARCHAR(255) NOT NULL,
+  size INTEGER NOT NULL,
+  color VARCHAR(255) NOT NULL
+  );
 
-   CREATE TABLE cart(
-    id UUID PRIMARY KEY,
-    price INTEGER NOT NULL
-    user_id REFERENCES users(id) NOT NULL,
-    CONSTRAINT unique_user_cart UNIQUE (user_id)
-   );
+CREATE TABLE cart(
+  id UUID PRIMARY KEY,
+  price INTEGER NOT NULL,
+  user_id UUID REFERENCES users(id) NOT NULL,
+  CONSTRAINT unique_user_cart UNIQUE (user_id)
+  );
   `;
   const response = await db.query(SQL);
   return response.rows;
 };
 
-// shoes
-// user_id UUID REFERENCES users(id) NOT NULL,
-// CONSTRAINT unique_user_shoe UNIQUE(shoe_id, user_id)
+const init = async () => {
+  await db.connect();
+  console.log('db connect');
+  createTables();
+
+  const [nick, brendan, desiree] = await Promise.all([
+    createUser({id_admin: true, username: 'ndlorusso', password: 'abc123'}),
+    createUser({id_admin: false, username: 'brendan123', password: 'qwe123'}),
+    createUser({id_admin: false, username: 'desiree123', password: 'zxc3'})
+  ]);
+};
+init();
 
 // cart 
 // user_id REFERENCES users(id) NOT NULL,
 // shoe_id REFERENCES shoes(id) NOT NULL,
 // CONSTRAINT unique user_cart UNIQUE (user_id)
-
-
-const init = async () => {
-  await db.connect();
-  console.log("client connect");
-  createTables();
-};
-
-init();
