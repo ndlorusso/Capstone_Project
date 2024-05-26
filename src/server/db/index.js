@@ -1,5 +1,6 @@
 const { createUser } = require('./users')
 const { createShoe } = require('./shoes');
+const db = require('./client');
 
 const init = async () => {
     await db.connect();
@@ -15,7 +16,7 @@ const init = async () => {
     const [shoe1, shoe2, shoe3] = await Promise.all([
       createShoe({brand: 'crocs', size: 10, price: 60, color: 'navy'}),
       createShoe({brand: 'grundens', size: 8, price: 120, color: 'shrimp'}),
-      createShoe({brand: 'jordans', size: 11, price: 220, color: 'black'}),
+      createShoe({brand: 'jordans', size: 11, price: 220, color: 'black'})
     ])
   };
   

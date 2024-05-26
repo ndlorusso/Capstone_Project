@@ -1,6 +1,7 @@
 const db = require("./client");
 const uuid = require('uuid');
 
+// CREATE FUNCTION
 const createShoe = async ({ brand, size, price, color}) => {
     const SQL = `--sql
     INSERT INTO shoes(id, brand, size, price, color)
