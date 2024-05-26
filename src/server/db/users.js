@@ -2,6 +2,7 @@ const db = require('./client')
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const SALT_COUNT = 12;
+const JWT = process.env.JWT
 
 // NICK FUNCTION
 const createUser = async ({ is_admin, username, email, password }) => {
@@ -28,6 +29,23 @@ const createUser = async ({ is_admin, username, email, password }) => {
 //         throw err;
 //     }
 // }
+
+const authenticateUser = async ({ username, password }) => {
+    const SQL = `--sql 
+    SELECT id, password
+    FROM users
+    WHERE username = $1
+    `;
+    
+    const response = await db.query(SQL, [username])
+    if (!response.rows.length || await bcrypt.compare(password, response.rows[0].password) === false) {
+        const error = Errpr('not authenticated user');
+        error.status = 401;
+        throw error;
+    }
+    const token = await JWT.sign({id: response.rows[0].id}, JWT);
+    return { token: token};
+};
 
 const getUser = async({email, password}) => {
     if(!email || !password) {
@@ -64,7 +82,6 @@ const getUserByEmail = async(email) => {
 
 module.exports = {
     createUser,
-    // createShoe,
     getUser,
     getUserByEmail
 };
