@@ -4,7 +4,9 @@ const apiRouter = express.Router();
 
 const { fetchAllShoes } = require('../db');
 
-usersRouter.get('/', async (req, res, next) => {
+// GET ALL SHOES - /api/shoes
+// api router? or userRouter?
+apiRouter.get('/', async (req, res, next) => {
     try {
         const shoes = await fetchAllShoes();
         res.send ({shoes});
@@ -12,3 +14,6 @@ usersRouter.get('/', async (req, res, next) => {
         next(error);
     }
 });
+
+// check /api/users??
+module.exports = apiRouter;
