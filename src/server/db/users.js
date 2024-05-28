@@ -4,6 +4,11 @@ const uuid = require('uuid');
 const SALT_COUNT = 12;
 const JWT = process.env.JWT;
 
+// TEST FOR API.ROUTER
+const express = require('express');
+const usersRouter = require('../api/users');
+const apiRouter = express.Router();
+
 // CREATE USER FUNCTION
 const createUser = async ({ is_admin, username, email, password }) => {
     const SQL = `--sql
@@ -14,6 +19,23 @@ const createUser = async ({ is_admin, username, email, password }) => {
     const response = await db.query(SQL, [uuid.v4(), is_admin, username, email, await bcrypt.hash(password, SALT_COUNT)]);
     return response.rows[0];
   };
+
+// READ ALL USERS
+const fetchAllUsers = async () => {
+  const SQL = `--sql
+  SELECT * from users
+  `;
+  const response = await db.query(SQL);
+  return response.rows;
+};
+
+apiRouter.get('/api/users', async (req, res, next) => {
+  try {
+    res.send(await fetchAllUsers());
+  } catch (error) {
+    next(error);
+  }
+});
 
 // AUTHENTICATE USER FUNCTION
 // const authenticateUser = async ({ username, password }) => {
@@ -95,6 +117,6 @@ const createUser = async ({ is_admin, username, email, password }) => {
 
 module.exports = {
     createUser,
-    // getUser,
+    fetchAllUsers,
     // getUserByEmail
 };
