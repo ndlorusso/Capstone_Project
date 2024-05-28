@@ -29,14 +29,6 @@ const fetchAllUsers = async () => {
   return response.rows;
 };
 
-apiRouter.get('/api/users', async (req, res, next) => {
-  try {
-    res.send(await fetchAllUsers());
-  } catch (error) {
-    next(error);
-  }
-});
-
 // AUTHENTICATE USER FUNCTION
 // const authenticateUser = async ({ username, password }) => {
 //     const SQL = `--sql 
