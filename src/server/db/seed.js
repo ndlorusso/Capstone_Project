@@ -1,9 +1,7 @@
-// require('dotenv').config();
-// const pg = require('pg');
-// const uuid = require('uuid');
 const db = require('./client');
 const { createUser } = require('./users');
 const { createShoe } = require('./shoes');
+const { createCart } = require('./cart');
 
 const createTables = async () => {
   const SQL = `--sql
@@ -46,6 +44,12 @@ CREATE TABLE cart(
     createShoe({brand: 'crocs', size: 10, price: 60, color: 'navy'}),
     createShoe({brand: 'grundens', size: 8, price: 120, color: 'shrimp'}),
     createShoe({brand: 'jordans', size: 11, price: 220, color: 'black'})
+  ]);
+
+  const [cart1, cart2, cart3] = await Promise.all([
+    createCart({total_price: 200, user_id: nick.id }),
+    createCart({total_price: 300, user_id: brendan.id }),
+    createCart({total_price: 400, user_id: desiree.id })
   ]);
 };
 
