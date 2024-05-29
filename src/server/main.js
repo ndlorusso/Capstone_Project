@@ -1,16 +1,16 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const express = require('express');
 const router = require('vite-express');
 const app = express();
 
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 const db = require('./db/client')
-db.connect()
+db.connect();
 
 const apiRouter = require('./api');
 app.use('/api', apiRouter);

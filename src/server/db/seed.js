@@ -1,85 +1,113 @@
-const db = require('./client');
-const { createUser } = require('./users');
+const db = require("./client");
+const { createUser } = require("./users");
+const { createShoe } = require("./shoes");
+// const { createCart } = require("./cart");
 
 const users = [
   {
-    name: 'Emily Johnson',
-    email: 'emily@example.com',
-    password: 'securepass',
+    is_admin: true,
+    username: "ndlorusso",
+    email: "nick@gmail.com",
+    password: "abc123",
   },
   {
-    name: 'Liu Wei',
-    email: 'liu@example.com',
-    password: 'strongpass',
+    is_admin: false,
+    username: "brendan123",
+    email: "brendan@gmail.com",
+    password: "qwe123",
   },
   {
-    name: 'Isabella García',
-    email: 'bella@example.com',
-    password: 'pass1234',
+    is_admin: false,
+    username: "desiree123",
+    email: "desiree@gmail.com",
+    password: "zxc3",
   },
-  {
-    name: 'Mohammed Ahmed',
-    email: 'mohammed@example.com',
-    password: 'mysecretpassword',
-  },
-  {
-    name: 'John Smith',
-    email: 'john@example.com',
-    password: 'password123',
-  },
-  // Add more user objects as needed
-];  
+];
 
-const dropTables = async () => {
-    try {
-        await db.query(`
-        DROP TABLE IF EXISTS users;
-        `)
-    }
-    catch(err) {
-        throw err;
-    }
-}
+const shoes = [
+  { brand: "crocs", size: 10, price: 60, color: "navy" },
+  { brand: "grundens", size: 8, price: 120, color: "shrimp" },
+  { brand: "jordans", size: 11, price: 220, color: "black" },
+];
 
 const createTables = async () => {
-    try{
-        await db.query(`
-        CREATE TABLE users(
-            id SERIAL PRIMARY KEY,
-            name VARCHAR(255) DEFAULT 'name',
-            email VARCHAR(255) UNIQUE NOT NULL,
-            password VARCHAR(255) NOT NULL
-        )`)
-    }
-    catch(err) {
-        throw err;
-    }
-}
+  const SQL = `--sql
+  DROP TABLE IF EXISTS cart;
+  DROP TABLE IF EXISTS shoes;
+  DROP TABLE IF EXISTS users;
+
+  CREATE TABLE users(
+    id UUID PRIMARY KEY,
+    is_admin BOOLEAN DEFAULT FALSE,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+  );
+
+  CREATE TABLE shoes(
+    id UUID PRIMARY KEY,
+    brand VARCHAR(255) NOT NULL,
+    size INTEGER NOT NULL,
+    price INTEGER NOT NULL,
+    color VARCHAR(255) NOT NULL
+  );
+
+  CREATE TABLE cart(
+    id UUID PRIMARY KEY,
+    total_price INTEGER NOT NULL,
+    user_id UUID REFERENCES users(id) NOT NULL,
+    CONSTRAINT unique_user_cart UNIQUE (user_id)
+  );
+`;
+  await db.query(SQL);
+};
 
 const insertUsers = async () => {
   try {
     for (const user of users) {
-      await createUser({name: user.name, email: user.email, password: user.password});
+      await createUser({
+        is_admin: user.is_admin,
+        username: user.username,
+        email: user.email,
+        password: user.password,
+      });
     }
-    console.log('Seed data inserted successfully.');
+    console.log("Users inserted successfully.");
   } catch (error) {
-    console.error('Error inserting seed data:', error);
+    console.error("Error inserting seed data:", error);
   }
 };
 
-const seedDatabse = async () => {
-    try {
-        db.connect();
-        await dropTables();
-        await createTables();
-        await insertUsers();
+const insertShoes = async () => {
+  try {
+    for (const shoe of shoes) {
+      await createShoe({
+        brand: shoe.brand,
+        size: shoe.size,
+        price: shoe.price,
+        color: shoe.color,
+      });
     }
-    catch (err) {
-        throw err;
-    }
-    finally {
-        db.end()
-    }
-}
+    console.log("Shoes inserted successfully.");
+  } catch (error) {
+    console.error("Error inserting seed data:", error);
+  }
+};
 
-seedDatabse()
+// insert Cart function
+
+const seedDatabase = async () => {
+  try {
+    db.connect();
+    await createTables();
+    await insertUsers();
+    await insertShoes();
+    // await insertCart();
+  } catch (err) {
+    throw err;
+  } finally {
+    db.end();
+  }
+};
+
+seedDatabase();
