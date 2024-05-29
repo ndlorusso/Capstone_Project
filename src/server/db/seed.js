@@ -5,7 +5,7 @@ const { createShoe } = require("./shoes");
 
 const users = [
   {
-    is_admin: false,
+    is_admin: true,
     username: "ndlorusso",
     email: "nick@gmail.com",
     password: "abc123",
