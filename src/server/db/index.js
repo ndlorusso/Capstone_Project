@@ -6,8 +6,6 @@ const init = async () => {
     console.log('db connect');
     createTables();
     console.log('data seeded');
-    fetchAllShoes();
-    console.log('get all shoes');
 };
   
 init();
