@@ -1,7 +1,7 @@
 const db = require("./client");
 const { createUser } = require("./users");
 const { createShoe } = require("./shoes");
-const { createCart } = require("./cart");
+// const { createCart } = require("./cart");
 
 const users = [
   {
@@ -17,7 +17,7 @@ const users = [
     password: "qwe123",
   },
   {
-    id_admin: false,
+    is_admin: false,
     username: "desiree123",
     email: "desiree@gmail.com",
     password: "zxc3",
@@ -94,12 +94,15 @@ const insertShoes = async () => {
   }
 };
 
+// insert Cart function
+
 const seedDatabase = async () => {
   try {
     db.connect();
     await createTables();
     await insertUsers();
     await insertShoes();
+    // await insertCart();
   } catch (err) {
     throw err;
   } finally {
