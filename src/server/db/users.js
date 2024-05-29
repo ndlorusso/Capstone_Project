@@ -1,24 +1,30 @@
-const db = require('./client')
-const bcrypt = require('bcrypt');
-const uuid = require('uuid');
+const db = require("./client");
+const bcrypt = require("bcrypt");
+const uuid = require("uuid");
 const SALT_COUNT = 12;
 const JWT = process.env.JWT;
 
 // TEST FOR API.ROUTER
-const express = require('express');
-const usersRouter = require('../api/users');
+const express = require("express");
+const usersRouter = require("../api/users");
 const apiRouter = express.Router();
 
 // CREATE USER FUNCTION
 const createUser = async ({ is_admin, username, email, password }) => {
-    const SQL = `--sql
+  const SQL = `--sql
     INSERT INTO users(id, is_admin, username, email, password)
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *
     `;
-    const response = await db.query(SQL, [uuid.v4(), is_admin, username, email, await bcrypt.hash(password, SALT_COUNT)]);
-    return response.rows[0];
-  };
+  const response = await db.query(SQL, [
+    uuid.v4(),
+    is_admin,
+    username,
+    email,
+    await bcrypt.hash(password, SALT_COUNT),
+  ]);
+  return response.rows[0];
+};
 
 // READ ALL USERS
 const fetchAllUsers = async () => {
@@ -31,12 +37,12 @@ const fetchAllUsers = async () => {
 
 // AUTHENTICATE USER FUNCTION
 // const authenticateUser = async ({ username, password }) => {
-//     const SQL = `--sql 
+//     const SQL = `--sql
 //     SELECT id, password
 //     FROM users
 //     WHERE username = $1
 //     `;
-    
+
 //     const response = await db.query(SQL, [username])
 //     if (!response.rows.length || await bcrypt.compare(password, response.rows[0].password) === false) {
 //         const error = Errpr('not authenticated user');
@@ -94,7 +100,7 @@ const fetchAllUsers = async () => {
 // const getUserByEmail = async(email) => {
 //     try {
 //         const { rows: [ user ] } = await db.query(`
-//         SELECT * 
+//         SELECT *
 //         FROM users
 //         WHERE email=$1;`, [ email ]);
 
@@ -108,7 +114,7 @@ const fetchAllUsers = async () => {
 // }
 
 module.exports = {
-    createUser,
-    fetchAllUsers,
-    // getUserByEmail
+  createUser,
+  fetchAllUsers,
+  // getUserByEmail
 };
