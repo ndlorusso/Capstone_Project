@@ -28,26 +28,18 @@ const fetchAllShoes = async () => {
   return response.rows;
 };
 
-apiRouter.get('/api/shoes', async (req, res, next) => {
-  try {
-      res.send(await fetchAllShoes());
-  } catch (error) {
-      next(error);
-  }
-});
-
 // READ SINGLE SHOE
-// const fetchOneShoe = async (id) => {
-//   const SQL = `--sql
-//   SELECT * from SHOES
-//   WHERE id = $1
-//   `;
-//   const response = await db.query(SQL, [id]);
-//   return response.rows;
-// };
+const fetchOneShoe = async (id) => {
+  const SQL = `--sql
+  SELECT * from shoes
+  WHERE id = $1
+  `;
+  const response = await db.query(SQL, [id]);
+  return response.rows;
+};
 
   module.exports = {
     createShoe,
     fetchAllShoes,
-    // fetchOneShoe,
+    fetchOneShoe,
   };

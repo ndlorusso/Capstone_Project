@@ -30,6 +30,14 @@ const shoes = [
   { brand: "jordans", size: 11, price: 220, color: "black" },
 ];
 
+// how to get uuid for each users cart
+// const cart = [
+//   { total_price: 60, user_id: users[0].id },
+//   { total_price: 120, user_id: users[1].id },
+//   { total_price: 220, user_id: users[2].id },
+// ];
+// how to get total price for multiple shoes
+
 const createTables = async () => {
   const SQL = `--sql
   DROP TABLE IF EXISTS cart;
@@ -95,6 +103,19 @@ const insertShoes = async () => {
 };
 
 // insert Cart function
+// const insertCart = async () => {
+//   try {
+//     for (const carts of cart) {
+//       await createCart({
+//         total_price: carts.total_price,
+//         user_id: carts.user_id,
+//       });
+//     }
+//     console.log("Cart inserted successfully.");
+//   } catch (error) {
+//     console.error("Error inserting seed data:", error);
+//   }
+// };
 
 const seedDatabase = async () => {
   try {

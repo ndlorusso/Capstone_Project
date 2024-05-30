@@ -8,14 +8,17 @@ const {
   // getUserByEmail
 } = require("../db");
 
-// TEST - GET ALL USERS - api/users
-usersRouter.get("/", async (req, res, next) => {
+// GET ALL USERS - api/users
+usersRouter.get('/', async (req, res, next) => {
   try {
     res.send(await fetchAllUsers());
   } catch (error) {
     next(error);
   }
 });
+
+// TEST - CREATE USER
+// usersRouter.post();
 
 usersRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
