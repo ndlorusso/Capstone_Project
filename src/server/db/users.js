@@ -4,7 +4,12 @@ const uuid = require("uuid");
 const SALT_COUNT = 12;
 const JWT = process.env.JWT;
 
-// NICK FUNCTION
+// TEST FOR API.ROUTER
+const express = require("express");
+const usersRouter = require("../api/users");
+const apiRouter = express.Router();
+
+// CREATE USER FUNCTION
 const createUser = async ({ is_admin, username, email, password }) => {
   const SQL = `--sql
     INSERT INTO users(id, is_admin, username, email, password)
@@ -21,23 +26,18 @@ const createUser = async ({ is_admin, username, email, password }) => {
   return response.rows[0];
 };
 
-// const createUser = async({ name='first last', email, password }) => {
-//     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-//     try {
-//         const { rows: [user ] } = await db.query(`
-//         INSERT INTO users(name, email, password)
-//         VALUES($1, $2, $3)
-//         ON CONFLICT (email) DO NOTHING
-//         RETURNING *`, [name, email, hashedPassword]);
+// READ ALL USERS
+const fetchAllUsers = async () => {
+  const SQL = `--sql
+  SELECT * from users
+  `;
+  const response = await db.query(SQL);
+  return response.rows;
+};
 
-//         return user;
-//     } catch (err) {
-//         throw err;
-//     }
-// }
-
+// AUTHENTICATE USER FUNCTION
 const authenticateUser = async ({ username, password }) => {
-  const SQL = `--sql 
+  const SQL = `--sql
     SELECT id, password
     FROM users
     WHERE username = $1
@@ -48,7 +48,7 @@ const authenticateUser = async ({ username, password }) => {
     !response.rows.length ||
     (await bcrypt.compare(password, response.rows[0].password)) === false
   ) {
-    const error = Errpr("not authenticated user");
+    const error = Error("not authenticated user");
     error.status = 401;
     throw error;
   }
@@ -56,46 +56,68 @@ const authenticateUser = async ({ username, password }) => {
   return { token: token };
 };
 
-const getUser = async ({ email, password }) => {
-  if (!email || !password) {
-    return;
-  }
-  try {
-    const user = await getUserByEmail(email);
-    if (!user) return;
-    const hashedPassword = user.password;
-    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-    if (!passwordsMatch) return;
-    delete user.password;
-    return user;
-  } catch (err) {
-    throw err;
-  }
-};
+// FIND USER BY TOKEN FUNCION
+// const findUserByToken = async (token) => {
+//     let id
+//     try {
+//         const payload = await jwt.verify(token, JWT)
+//         id = payload.id
+//     } catch (ex) {
+//         const error = Error('not authorized')
+//         error.status = 401
+//         throw error
+//     }
+//     const SQL = /*SQL*/ `
+//     SELECT id, username
+//     FROM users
+//     WHERE id = $1
+//     `
+//     const res = await client.query(SQL, [id])
+//     if(!res.rows.length) {
+//         const error = Error('Not Authorized')
+//         error.status = 401
+//         throw error
+//     }
+//     return res.rows[0]
+// }
 
-const getUserByEmail = async (email) => {
-  try {
-    const {
-      rows: [user],
-    } = await db.query(
-      `
-        SELECT * 
-        FROM users
-        WHERE email=$1;`,
-      [email]
-    );
+// TEMPLATE CODE
+// const getUser = async({email, password}) => {
+//     if(!email || !password) {
+//         return;
+//     }
+//     try {
+//         const user = await getUserByEmail(email);
+//         if(!user) return;
+//         const hashedPassword = user.password;
+//         const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+//         if(!passwordsMatch) return;
+//         delete user.password;
+//         return user;
+//     } catch (err) {
+//         throw err;
+//     }
+// }
 
-    if (!user) {
-      return;
-    }
-    return user;
-  } catch (err) {
-    throw err;
-  }
-};
+// TEMPLATE CODE
+// const getUserByEmail = async(email) => {
+//     try {
+//         const { rows: [ user ] } = await db.query(`
+//         SELECT *
+//         FROM users
+//         WHERE email=$1;`, [ email ]);
+
+//         if(!user) {
+//             return;
+//         }
+//         return user;
+//     } catch (err) {
+//         throw err;
+//     }
+// }
 
 module.exports = {
   createUser,
-  getUser,
-  getUserByEmail,
+  fetchAllUsers,
+  // getUserByEmail
 };
