@@ -11,14 +11,14 @@ shoesRouter.get('/', async (req, res, next) => {
     }
 });
 
-// GET SHOES BY ID
-// shoesRouter.get('/:id', async (req, res, next) => {
-//     try {
-//       res.send(await fetchOneShoe(req.params.id));
-//     } catch (error) {
-//       next(error);
-//     }
-//   });
+// TEST - GET ONE SHOE BY ID
+shoesRouter.get('/:id', async (req, res, next) => {
+    try {
+      res.send(await fetchOneShoe(req.params.id));
+    } catch (error) {
+      next(error);
+    }
+  });
   
 // CREATE SHOES
 //   shoesRouter.post("/api/shoes", async (req, res, next) => {
