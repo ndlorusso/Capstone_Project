@@ -20,7 +20,7 @@ shoesRouter.get('/:id', async (req, res, next) => {
     }
   });
 
-// CREATE SHOES - POST WORKING
+// CREATE SHOES - POST WORKING - protected route admin only
 shoesRouter.post('/', async (req, res, next) => {
     try {
       res.send(await createShoe(req.body));
