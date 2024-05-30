@@ -18,7 +18,7 @@ usersRouter.get('/', async (req, res, next) => {
 });
 
 // TEST - CREATE USER
-// usersRouter.post();
+// usersRouter.post('/register', async (req, res, next) => {});
 
 usersRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
@@ -57,8 +57,9 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 });
 
+// CREATE USER
 usersRouter.post("/register", async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { is_admin ,name, email, password } = req.body;
 
   try {
     const _user = await getUserByEmail(email);
@@ -71,6 +72,7 @@ usersRouter.post("/register", async (req, res, next) => {
     }
 
     const user = await createUser({
+      is_admin,
       name,
       email,
       password,

@@ -1,6 +1,6 @@
 const express = require('express')
 const shoesRouter = express.Router();
-const { fetchAllShoes, fetchOneShoe } = require('../db/shoes');
+const { fetchAllShoes, fetchOneShoe, createShoe } = require('../db/shoes');
 
 // GET ALL SHOES - /api/shoes
 shoesRouter.get('/', async (req, res, next) => {
@@ -11,7 +11,7 @@ shoesRouter.get('/', async (req, res, next) => {
     }
 });
 
-// TEST - GET ONE SHOE BY ID
+//GET ONE SHOE BY uuid
 shoesRouter.get('/:id', async (req, res, next) => {
     try {
       res.send(await fetchOneShoe(req.params.id));
@@ -20,14 +20,14 @@ shoesRouter.get('/:id', async (req, res, next) => {
     }
   });
 
-// CREATE SHOES
-//   shoesRouter.post("/api/shoes", async (req, res, next) => {
-//     try {
-//       res.send(await createShoe(req.body));
-//     } catch (error) {
-//       next(error);
-//     }
-//   });
+// CREATE SHOES - POST WORKING - protected route admin only
+shoesRouter.post('/', async (req, res, next) => {
+    try {
+      res.send(await createShoe(req.body));
+    } catch (error) {
+      next(error);
+    }
+  });
 
 // UPDATE SHOES
 //   shoesRouter.patch("/api/shoes/:id", async (req, res, next) => {
