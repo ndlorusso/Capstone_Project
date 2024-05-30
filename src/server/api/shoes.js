@@ -19,7 +19,7 @@ shoesRouter.get('/:id', async (req, res, next) => {
       next(error);
     }
   });
-  
+
 // CREATE SHOES
 //   shoesRouter.post("/api/shoes", async (req, res, next) => {
 //     try {

@@ -31,7 +31,7 @@ const fetchAllShoes = async () => {
 // READ SINGLE SHOE
 const fetchOneShoe = async (id) => {
   const SQL = `--sql
-  SELECT * from SHOES
+  SELECT * from shoes
   WHERE id = $1
   `;
   const response = await db.query(SQL, [id]);
