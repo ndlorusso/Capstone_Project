@@ -9,13 +9,13 @@ const apiRouter = express.Router();
 // const { Client } = require("pg");
 
 // CREATE FUNCTION
-const createShoe = async ({ brand, size, price, color}) => {
+const createShoe = async ({ brand, size, price, color, shoe_picture}) => {
     const SQL = `--sql
-    INSERT INTO shoes(id, brand, size, price, color)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO shoes(id, brand, size, price, color, shoe_picture)
+    VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *
     `;
-    const response = await db.query(SQL, [uuid.v4(), brand, size, price, color]);
+    const response = await db.query(SQL, [uuid.v4(), brand, size, price, color, shoe_picture]);
     return response.rows[0];
   };
 
