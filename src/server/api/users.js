@@ -20,7 +20,6 @@ usersRouter.get('/', async (req, res, next) => {
 // TEST - CREATE USER
 // usersRouter.post();
 
-
 usersRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {

@@ -37,22 +37,22 @@ const fetchAllUsers = async () => {
   return response.rows;
 };
 
-// AUTHENTICATE USER FUNCTION
-const authenticateUser = async ( { email, password } ) => {
-  const SQL = `--sql
-  SELECT id, password
-  FROM users
-  WHERE email = $1
-  `;
-  const response = await db.query(SQL, [email]);
-  if (!response.rows.length || await bcrypt.compare(password, response.rows[0].password) === false ) {
-    const error = Error('not authenticated');
-    error.status = 401;
-    throw error;
-  };
-  const token = await jwt.sign({id: response.rows[0].id}, JWT);
-  return { token: token};
-};
+// TEST - AUTHENTICATE USER FUNCTION
+// const authenticateUser = async ( { email, password } ) => {
+//   const SQL = `--sql
+//   SELECT id, password
+//   FROM users
+//   WHERE email = $1
+//   `;
+//   const response = await db.query(SQL, [email]);
+//   if (!response.rows.length || await bcrypt.compare(password, response.rows[0].password) === false ) {
+//     const error = Error('not authenticated');
+//     error.status = 401;
+//     throw error;
+//   };
+//   const token = await jwt.sign({id: response.rows[0].id}, JWT);
+//   return { token: token};
+// };
 
 // FIND USER BY TOKEN FUNCION
 // const findUserByToken = async (token) => {
@@ -117,6 +117,6 @@ const authenticateUser = async ( { email, password } ) => {
 module.exports = {
   createUser,
   fetchAllUsers,
-  authenticateUser,
+  // authenticateUser,
   // getUserByEmail
 };
