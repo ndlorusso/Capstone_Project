@@ -30,9 +30,9 @@ const shoes = [
   { brand: "jordans", size: 11, price: 220, color: "black" },
 ];
 
-// how to get uuid for each users cart
+// how to get uuid for each users cart - use helper reduce function to grab prices and sums them up
 // const cart = [
-//   { total_price: 60, user_id: users[0].id },
+//   { total_price: shoes[0] + shoes[1], user_id: users[0].id },
 //   { total_price: 120, user_id: users[1].id },
 //   { total_price: 220, user_id: users[2].id },
 // ];
