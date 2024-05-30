@@ -28,14 +28,6 @@ const fetchAllShoes = async () => {
   return response.rows;
 };
 
-apiRouter.get('/api/shoes', async (req, res, next) => {
-  try {
-      res.send(await fetchAllShoes());
-  } catch (error) {
-      next(error);
-  }
-});
-
 // READ SINGLE SHOE
 // const fetchOneShoe = async (id) => {
 //   const SQL = `--sql
