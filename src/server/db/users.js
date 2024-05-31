@@ -45,13 +45,14 @@ const authenticateUser = async ( { email, password } ) => {
   WHERE email = $1
   `;
   const response = await db.query(SQL, [email]);
-  if (!response.rows.length || await bcrypt.compare(password, response.rows[0].password) === false ) {
+  if (!response.rows.length || (await bcrypt.compare(password, response.rows[0].password)) === false ) {
     const error = Error('not authenticated');
     error.status = 401;
     throw error;
   };
   const token = await jwt.sign({id: response.rows[0].id}, JWT);
-  return { token: token};
+  console.log(token);
+  return { token: response.rows[0].id };
 };
 
 // FIND USER BY TOKEN FUNCION

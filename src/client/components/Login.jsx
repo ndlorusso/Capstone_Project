@@ -15,7 +15,9 @@ const Login = () => {
 
   const login = async() => {
     try {
-        const response = await fetch('http://localhost:3000/api/users/login', {
+        const response = await fetch('http://localhost:3000/api/users/login',
+        // const response = await fetch('http://localhost:3000/api/users/register',
+         {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
@@ -23,9 +25,12 @@ const Login = () => {
             body: JSON.stringify({
                 email,
                 password
-            })
+            }),
         });
         const result = await response.json();
+        console.log("sign up result", result);
+        console.log("token:", result.token);
+        setToken(result.token);
         setMessage(result.message);
         if(!response.ok) {
           throw(result)

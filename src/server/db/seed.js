@@ -1,8 +1,7 @@
 const db = require("./client");
 const { createUser } = require("./users");
 const { createShoe } = require("./shoes");
-// const { createCart } = require("./cart");
-
+const { createCart } = require("./cart");
 const users = [
   {
     is_admin: true,
@@ -31,13 +30,16 @@ const shoes = [
 ];
 
 // how to get uuid for each users cart - use helper reduce function to grab prices and sums them up
-// const cart = [
-//   { total_price: shoes[0] + shoes[1], user_id: users[0].id },
-//   { total_price: 120, user_id: users[1].id },
-//   { total_price: 220, user_id: users[2].id },
-// ];
+// user_id is NULL in postbird
+const cart = [
+  { total_price: 1000, user_id: users[0].id },
+  { total_price: 120, user_id: users[1].id },
+  { total_price: 220, user_id: users[2].id },
+];
 // how to get total price for multiple shoes
 
+
+// line 68 - NOT NULL?
 const createTables = async () => {
   const SQL = `--sql
   DROP TABLE IF EXISTS cart;
@@ -64,7 +66,7 @@ const createTables = async () => {
   CREATE TABLE cart(
     id UUID PRIMARY KEY,
     total_price INTEGER NOT NULL,
-    user_id UUID REFERENCES users(id) NOT NULL,
+    user_id UUID REFERENCES users(id),
     CONSTRAINT unique_user_cart UNIQUE (user_id)
   );
 `;
@@ -106,19 +108,19 @@ const insertShoes = async () => {
 };
 
 // insert Cart function
-// const insertCart = async () => {
-//   try {
-//     for (const carts of cart) {
-//       await createCart({
-//         total_price: carts.total_price,
-//         user_id: carts.user_id,
-//       });
-//     }
-//     console.log("Cart inserted successfully.");
-//   } catch (error) {
-//     console.error("Error inserting seed data:", error);
-//   }
-// };
+const insertCart = async () => {
+  try {
+    for (const carts of cart) {
+      await createCart({
+        total_price: carts.total_price,
+        user_id: carts.user_id,
+      });
+    }
+    console.log("Cart inserted successfully.");
+  } catch (error) {
+    console.error("Error inserting seed data:", error);
+  }
+};
 
 const seedDatabase = async () => {
   try {
@@ -126,7 +128,7 @@ const seedDatabase = async () => {
     await createTables();
     await insertUsers();
     await insertShoes();
-    // await insertCart();
+    await insertCart();
   } catch (err) {
     throw err;
   } finally {
