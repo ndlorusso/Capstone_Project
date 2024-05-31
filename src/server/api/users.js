@@ -27,7 +27,7 @@ usersRouter.post("/login", async (req, res, next) => {
     });
   }
   try {
-    const user = await getUser({ email, password });
+    const user = await fetchAllUsers({ email, password });
     if (user) {
       const token = jwt.sign(
         {
@@ -56,44 +56,44 @@ usersRouter.post("/login", async (req, res, next) => {
 });
 
 // CREATE USER
-usersRouter.post("/register", async (req, res, next) => {
-  const { is_admin ,name, email, password } = req.body;
+// usersRouter.post("/register", async (req, res, next) => {
+//   const { is_admin ,name, email, password } = req.body;
 
-  try {
-    const _user = await getUserByEmail(email);
+//   try {
+//     const _user = await getUserByEmail(email);
 
-    if (_user) {
-      next({
-        name: "UserExistsError",
-        message: "A user with that email already exists",
-      });
-    }
+//     if (_user) {
+//       next({
+//         name: "UserExistsError",
+//         message: "A user with that email already exists",
+//       });
+//     }
 
-    const user = await createUser({
-      is_admin,
-      name,
-      email,
-      password,
-    });
+//     const user = await createUser({
+//       is_admin,
+//       name,
+//       email,
+//       password,
+//     });
 
-    const token = jwt.sign(
-      {
-        id: user.id,
-        email,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1w",
-      }
-    );
+//     const token = jwt.sign(
+//       {
+//         id: user.id,
+//         email,
+//       },
+//       process.env.JWT_SECRET,
+//       {
+//         expiresIn: "1w",
+//       }
+//     );
 
-    res.send({
-      message: "Sign up successful!",
-      token,
-    });
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
+//     res.send({
+//       message: "Sign up successful!",
+//       token,
+//     });
+//   } catch ({ name, message }) {
+//     next({ name, message });
+//   }
+// });
 
 module.exports = usersRouter;

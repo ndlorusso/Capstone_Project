@@ -19,7 +19,7 @@ const createShoe = async ({ brand, size, price, color, shoe_picture}) => {
     return response.rows[0];
   };
 
-// READ ALL SHOES
+  // READ ALL SHOES
 const fetchAllShoes = async () => {
   const SQL = `--sql
   SELECT * from shoes
