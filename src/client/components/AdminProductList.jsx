@@ -1,4 +1,3 @@
-import { fetchAllShoes } from "../API/index";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +9,8 @@ const AdminProductList = () => {
     useEffect(() => {
       async function getAllShoes() {
         try {
-          const APIresponse = await fetchAllShoes();
+          const APIresponse = await fetch ('http://localhost:3000/api/shoes')
+          console.log(APIresponse.json);
           if (APIresponse.success) {
             setShoes(APIresponse.data.shoes);
           } else {
