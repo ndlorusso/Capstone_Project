@@ -33,7 +33,7 @@ const AdminProductList = () => {
   
     return (
       <>
-        <h1>The Most Hated Application</h1>
+        <h1>The Display</h1>
         <div>
           Search:{" "}
           <input
