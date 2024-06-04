@@ -47,7 +47,7 @@ const ProductList = () => {
   );
 };
 
-export default ProductPage;
+export default ProductList;
 
 //   if (!product) {
 //     return <div>Loading...</div>;

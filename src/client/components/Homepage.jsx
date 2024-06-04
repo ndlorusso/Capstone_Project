@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
-import ProductCard from './ProductCard';
+import ProductDetails from './ProductDetails';
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ const HomePage = () => {
       <h1>All Products</h1>
       <div className="product-list">
         {products.map(product => (
-          <ProductCard key={product.id} product={product} />
+          <ProductDetails key={product.id} product={product} />
         ))}
       </div>
     </div>
