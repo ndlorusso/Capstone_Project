@@ -9,7 +9,7 @@ const AdminUserList = () => {
   useEffect(() => {
     async function getUsers() {
       try {
-        const response = await fetchAllUsers();
+        const response = await fetch ('http://localhost:3000/api/users');
         if (response.success) {
           setUsers(response.data.users);
         } else {
