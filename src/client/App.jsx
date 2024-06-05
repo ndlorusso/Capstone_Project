@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import Login from './components/Login';
-import "style.css";
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import Login from "./components/Login";
+import "./style.css";
 import AdminProductList from "./components/AdminProductList";
 import AdminUserList from "./components/AdminUserList";
 import Homepage from "./components/Homepage";
@@ -12,7 +12,7 @@ import Register from "./components/Register";
 
 function App() {
   const [productID, setProductID] = useState(null);
-  
+
   return (
     <>
       <NavBar />
@@ -33,7 +33,9 @@ function App() {
           <Route path="/new-shoe" element={<NewShoeForm />} />
           <Route
             path="/shoes/:id"
-            element={<SingleShoeDetails shoeId={shoeID} setShoeId={setShoeID} />}
+            element={
+              <SingleShoeDetails shoeId={shoeID} setShoeId={setShoeID} />
+            }
           />
         </Routes>
       </div>

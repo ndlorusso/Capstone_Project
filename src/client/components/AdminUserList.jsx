@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { fetchAllUsers } from "../API/index";
 
 const AdminUserList = () => {
   const [users, setUsers] = useState([]);
@@ -9,7 +8,7 @@ const AdminUserList = () => {
   useEffect(() => {
     async function getUsers() {
       try {
-        const response = await fetchAllUsers();
+        const response = await fetch("http://localhost:3000/api/users");
         if (response.success) {
           setUsers(response.data.users);
         } else {
@@ -23,7 +22,7 @@ const AdminUserList = () => {
   }, []);
 
   const filteredUsers = searchParams
-    ? users.filter(user =>
+    ? users.filter((user) =>
         user.name.toLowerCase().includes(searchParams.toLowerCase())
       )
     : users;
@@ -40,11 +39,11 @@ const AdminUserList = () => {
         <input
           type="text"
           value={searchParams}
-          onChange={e => setSearchParams(e.target.value)}
+          onChange={(e) => setSearchParams(e.target.value)}
         />
       </div>
       <ul>
-        {filteredUsers.map(user => (
+        {filteredUsers.map((user) => (
           <li key={user.id}>
             <p>{user.name}</p>
             <p>{user.email}</p>
