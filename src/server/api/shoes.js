@@ -20,7 +20,7 @@ shoesRouter.get('/:id', async (req, res, next) => {
     }
   });
 
-// CREATE SHOES - POST WORKING - protected route admin only
+// CREATE SHOES - POST WORKING - protecteod rute admin only
 shoesRouter.post('/', async (req, res, next) => {
     try {
       res.send(await createShoe(req.body));
@@ -30,21 +30,21 @@ shoesRouter.post('/', async (req, res, next) => {
   });
 
 // UPDATE SHOES
-//   shoesRouter.patch("/api/shoes/:id", async (req, res, next) => {
-//     try {
-//       res.send(await updateShoe(req.params.id, req.body));
-//     } catch (error) {
-//       next(error);
-//     }
-//   });
+  shoesRouter.patch("/:id", async (req, res, next) => {
+    try {
+      res.send(await updateShoe(req.params.id, req.body));
+    } catch (error) {
+      next(error);
+    }
+  });
 
 //  DELETE SHOES
-//   shoesRouter.delete("/api/shoes/:id", async (req, res, next) => {
-//     try {
-//       res.send(await deleteShoe(req.params.id));
-//     } catch (error) {
-//       next(error);
-//     }
-//   });
+  shoesRouter.delete("/:id", async (req, res, next) => {
+    try {
+      res.send(await deleteShoe(req.params.id));
+    } catch (error) {
+      next(error);
+    }
+  });
 
 module.exports = shoesRouter;

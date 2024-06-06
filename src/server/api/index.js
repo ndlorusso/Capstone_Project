@@ -38,8 +38,8 @@ apiRouter.use('/users', usersRouter);
 const shoesRouter = require('./shoes');
 apiRouter.use('/shoes', shoesRouter);
 
-// const cartRouter = require('./users/:id/cart');
-// apiRouter.use('./users/:id/cart', cartRouter);
+const cartRouter = require('./cart');
+apiRouter.use('/cart', cartRouter);
 
 apiRouter.use((err, req, res, next) => {
     res.status(500).send(err)
