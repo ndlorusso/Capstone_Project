@@ -24,9 +24,30 @@ const users = [
 ];
 
 const shoes = [
-  { brand: "crocs", size: 10, price: 60, color: "navy", shoe_picture: "https://images.footway.com/02/07944-00_001.png?auto=format&fit=max&w=1200", },
-  { brand: "grundens", size: 8, price: 120, color: "shrimp", shoe_picture: "https://www.sportsmans.com/medias/grundens-mens-deck-boss-ankle-fishing-boots-monument-gray-size-9-1538245-1.jpg?context=bWFzdGVyfGltYWdlc3w0NTk1MHxpbWFnZS9qcGVnfGFHRTFMMmhsWkM4eE1USTJNRFEzTVRjd05UWXpNQzh4TWpBd0xXTnZiblpsY25OcGIyNUdiM0p0WVhSZlltRnpaUzFqYjI1MlpYSnphVzl1Um05eWJXRjBYM050ZHkweE5UTTRNalExTFRFdWFuQm58NmY2MzA1ODhkMjE1Mjk0OTJlZDQ5ZGNjYzY3OTM3ZmVlNGJkMzUyZjZhZmNhNTU4Zjk3YmYzZTY4MzE1NzU3MQ", },
-  { brand: "jordans", size: 11, price: 220, color: "black", shoe_picture: "https://images.solecollector.com/images/fl_lossy,q_auto/c_crop,h_1099,w_1999,x_0,y_507/drfprzpyn6hskmyscqk9/air-jordan-1-high-lost-and-found-dz5485-612-3", },
+  {
+    brand: "crocs",
+    size: 10,
+    price: 60,
+    color: "navy",
+    shoe_picture:
+      "https://images.footway.com/02/07944-00_001.png?auto=format&fit=max&w=1200",
+  },
+  {
+    brand: "grundens",
+    size: 8,
+    price: 120,
+    color: "shrimp",
+    shoe_picture:
+      "https://www.sportsmans.com/medias/grundens-mens-deck-boss-ankle-fishing-boots-monument-gray-size-9-1538245-1.jpg?context=bWFzdGVyfGltYWdlc3w0NTk1MHxpbWFnZS9qcGVnfGFHRTFMMmhsWkM4eE1USTJNRFEzTVRjd05UWXpNQzh4TWpBd0xXTnZiblpsY25OcGIyNUdiM0p0WVhSZlltRnpaUzFqYjI1MlpYSnphVzl1Um05eWJXRjBYM050ZHkweE5UTTRNalExTFRFdWFuQm58NmY2MzA1ODhkMjE1Mjk0OTJlZDQ5ZGNjYzY3OTM3ZmVlNGJkMzUyZjZhZmNhNTU4Zjk3YmYzZTY4MzE1NzU3MQ",
+  },
+  {
+    brand: "jordans",
+    size: 11,
+    price: 220,
+    color: "black",
+    shoe_picture:
+      "https://images.solecollector.com/images/fl_lossy,q_auto/c_crop,h_1099,w_1999,x_0,y_507/drfprzpyn6hskmyscqk9/air-jordan-1-high-lost-and-found-dz5485-612-3",
+  },
 ];
 
 // how to get uuid for each users cart - use helper reduce function to grab prices and sums them up
@@ -37,7 +58,6 @@ const cart = [
   { total_price: 220, user_id: users[2].id },
 ];
 // how to get total price for multiple shoes
-
 
 // line 68 - NOT NULL?
 const createTables = async () => {
@@ -101,7 +121,7 @@ const insertShoes = async () => {
       });
     }
     console.log("Shoes inserted successfully.");
-    console.log('link to shoe image',shoes[0].shoe_picture);
+    console.log("link to shoe image", shoes[0].shoe_picture);
   } catch (error) {
     console.error("Error inserting seed data:", error);
   }

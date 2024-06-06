@@ -3,8 +3,7 @@ const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const SALT_COUNT = 12;
 const JWT = process.env.JWT;
-const jwt = require('jsonwebtoken');
-
+const jwt = require("jsonwebtoken");
 
 // TEST FOR API.ROUTER
 const express = require("express");
@@ -38,19 +37,22 @@ const fetchAllUsers = async () => {
 };
 
 // TEST - AUTHENTICATE USER FUNCTION
-const authenticateUser = async ( { email, password } ) => {
+const authenticateUser = async ({ email, password }) => {
   const SQL = `--sql
   SELECT id, password
   FROM users
   WHERE email = $1
   `;
   const response = await db.query(SQL, [email]);
-  if (!response.rows.length || (await bcrypt.compare(password, response.rows[0].password)) === false ) {
-    const error = Error('not authenticated');
+  if (
+    !response.rows.length ||
+    (await bcrypt.compare(password, response.rows[0].password)) === false
+  ) {
+    const error = Error("not authenticated");
     error.status = 401;
     throw error;
-  };
-  const token = await jwt.sign({id: response.rows[0].id}, JWT);
+  }
+  const token = await jwt.sign({ id: response.rows[0].id }, JWT);
   console.log(token);
   return { token: response.rows[0].id };
 };

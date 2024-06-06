@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import reactLogo from "./assets/react.svg";
 import Login from "./components/Login";
 import "./style.css";
@@ -28,13 +31,15 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<AllShoes shoeId={shoeID} setShoeId={setShoeID} />}
+            element={
+              <ProductList shoeId={productID} setShoeId={setProductID} />
+            }
           />
-          <Route path="/new-shoe" element={<NewShoeForm />} />
+          {/* <Route path="/new-shoe" element={<NewShoeForm />} /> */}
           <Route
             path="/shoes/:id"
             element={
-              <SingleShoeDetails shoeId={shoeID} setShoeId={setShoeID} />
+              <ProductDetails shoeId={productID} setShoeId={setProductID} />
             }
           />
         </Routes>

@@ -9,7 +9,7 @@ const {
 } = require("../db");
 
 // GET ALL USERS - api/users
-usersRouter.get('/', async (req, res, next) => {
+usersRouter.get("/", async (req, res, next) => {
   try {
     res.send(await fetchAllUsers());
   } catch (error) {
