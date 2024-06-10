@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; 
+  height: 100vh;
 }
 
 .App-header {
@@ -11,8 +11,45 @@
   font-size: 24px;
 }
 
-#comp-img{
+#comp-img {
   width: 250px;
 }
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 16px;
+  max-width: 300px;
+}
 
-/* Add more styling for other elements if needed */
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.product-info img {
+  width: 100%;
+  height: auto;
+}
+
+.product-info {
+  padding: 16px;
+  background-color: #fff;
+}
+
+.product-info h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.product-info p {
+  margin: 4px 0;
+  color: #666;
+}
+
+.product-info p:last-of-type {
+  font-weight: bold;
+  color: #000;
+}

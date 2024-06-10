@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
-import reactLogo from './assets/react.svg';
-import Login from './components/Login';
+import { Routes, Route, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import Login from "./components/Login";
 import "./style.css";
 import AdminProductList from "./components/AdminProductList";
 import AdminUserList from "./components/AdminUserList";
-import Homepage from "./components/Homepage";
+import HomePage from "./components/Homepage";
 import NavBar from "./components/NavBar";
 import ProductDetails from "./components/ProductDetails";
 import ProductList from "./components/ProductList";
@@ -13,7 +12,15 @@ import Register from "./components/Register";
 
 function App() {
   const [productID, setProductID] = useState(null);
-  
+  const [shoes, setShoes] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/shoes")
+      .then((response) => response.json())
+      .then((data) => setShoes(data))
+      .catch((error) => console.error("Error fetching shoes:", error));
+  }, []);
+
   return (
     <>
       <NavBar />
@@ -21,21 +28,16 @@ function App() {
         All Shoes
       </Link>
       <Link to="/new-shoe"> | New Shoe | </Link>
-      <Link to="/shoes/:id" style={{ color: "#e79a2ec4" }}>
+      <Link
+        to={productID ? `/products/${productID}` : "#"}
+        style={{ color: "#e79a2ec4" }}
+      >
         Single Product Details
       </Link>
 
       <div id="mainContainer">
         <Routes>
-          <Route
-            path="/"
-            element={<AllShoes shoeId={shoeID} setShoeId={setShoeID} />}
-          />
-          <Route path="/new-shoe" element={<NewShoeForm />} />
-          <Route
-            path="/shoes/:id"
-            element={<SingleShoeDetails shoeId={shoeID} setShoeId={setShoeID} />}
-          />
+          <Route path="/" element={<HomePage />} />
         </Routes>
       </div>
     </>

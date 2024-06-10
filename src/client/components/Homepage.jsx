@@ -1,23 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-import ProductDetails from './ProductDetails';
+import axios from "axios";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/products')
-      .then(response => setProducts(response.data))
-      .catch(error => console.error(error));
+    axios
+      .get("/api/products")
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error(error));
   }, []);
+
+  const productsArray = Array.isArray(products) ? products : [];
 
   return (
     <div className="home-page">
       <h1>All Products</h1>
       <div className="product-list">
-        {products.map(product => (
-          <ProductDetails key={product.id} product={product} />
+        {productsArray.map((product) => (
+          <Link
+            to={`/products/${product.id}`}
+            key={product.id}
+            className="product-link"
+          >
+            <div className="product-card">
+              <div className="product-info">
+                <img src={product.shoe_picture} alt={product.brand} />
+                <h2>{product.brand}</h2>
+                <p>Size: {product.size}</p>
+                <p>Color: {product.color}</p>
+                <p>Price: ${product.price}</p>
+              </div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
@@ -25,26 +41,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
-
-// const HomePage = () => {
-//   const [products, setProducts] = useState([]);
-
-// const Homepage = () => {
-//   return (
-//     <>
-//       <h1>Welcome to Shoe Emporium</h1>
-//       <div>
-//         {/* <Link to="/adminProductList">Manage Products</Link>
-//         <Link to="/adminUserList">Manage Users</Link> */}
-//         <Link to="/ProductDetails">Product Details</Link>
-//         <Link to="/ProductList">Product List</Link>
-        
-//        <Link to="/login">Login</Link>
-//        </div>
-//     </>
-//   );
-// };
-
-// export default Homepage;
