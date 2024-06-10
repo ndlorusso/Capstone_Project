@@ -1,25 +1,32 @@
 const id = require("volleyball/lib/id");
 const db = require("./client");
-const uuid = require('uuid');
+const uuid = require("uuid");
 
 // TEST FOR API.ROUTER
-const express = require('express');
+const express = require("express");
 const apiRouter = express.Router();
 
 // const { Client } = require("pg");
 
 // CREATE FUNCTION
-const createShoe = async ({ brand, size, price, color, shoe_picture}) => {
-    const SQL = `--sql
+const createShoe = async ({ brand, size, price, color, shoe_picture }) => {
+  const SQL = `--sql
     INSERT INTO shoes(id, brand, size, price, color, shoe_picture)
     VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *
     `;
-    const response = await db.query(SQL, [uuid.v4(), brand, size, price, color, shoe_picture]);
-    return response.rows[0];
-  };
+  const response = await db.query(SQL, [
+    uuid.v4(),
+    brand,
+    size,
+    price,
+    color,
+    shoe_picture,
+  ]);
+  return response.rows[0];
+};
 
-  // READ ALL SHOES
+// READ ALL SHOES
 const fetchAllShoes = async () => {
   const SQL = `--sql
   SELECT * from shoes
@@ -38,8 +45,8 @@ const fetchOneShoe = async (id) => {
   return response.rows;
 };
 
-  module.exports = {
-    createShoe,
-    fetchAllShoes,
-    fetchOneShoe,
-  };
+module.exports = {
+  createShoe,
+  fetchAllShoes,
+  fetchOneShoe,
+};
