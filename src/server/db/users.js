@@ -37,22 +37,37 @@ const fetchAllUsers = async () => {
   return response.rows;
 };
 
+// GET ONE USER
+// const fetchOneUser = async (id) => {
+//   const SQL = `--sql
+//   SELECT * from users
+//   WHERE id = $1
+//   `;
+//   const response = await db.query(SQL, [id]);
+//   return response.rows;
+// };
+
 // TEST - AUTHENTICATE USER FUNCTION
 const authenticateUser = async ( { email, password } ) => {
+  // console.log('authenticate user', email, password);
   const SQL = `--sql
   SELECT id, password
   FROM users
   WHERE email = $1
   `;
   const response = await db.query(SQL, [email]);
+  console.log('response:', response.rows[0].password);
+  console.log((await bcrypt.compare(password, response.rows[0].password)) === true );
+
   if (!response.rows.length || (await bcrypt.compare(password, response.rows[0].password)) === false ) {
     const error = Error('not authenticated');
     error.status = 401;
     throw error;
   };
+  // console.log('lincoln');
   const token = await jwt.sign({id: response.rows[0].id}, JWT);
-  console.log(token);
-  return { token: response.rows[0].id };
+  console.log('token:', token);
+  return { token };
 };
 
 // FIND USER BY TOKEN FUNCION
@@ -118,6 +133,7 @@ const authenticateUser = async ( { email, password } ) => {
 module.exports = {
   createUser,
   fetchAllUsers,
-  // authenticateUser,
+  // fetchOneUser,
+  authenticateUser,
   // getUserByEmail
 };

@@ -1,10 +1,13 @@
 const express = require("express");
 const usersRouter = express.Router();
+const JWT = process.env.JWT;
 // const jwt = require('jsonwebtoken');
 
 const {
   createUser,
   fetchAllUsers,
+  // fetchOneUser,
+  authenticateUser,
   // getUserByEmail
 } = require("../db");
 
@@ -17,39 +20,52 @@ usersRouter.get('/', async (req, res, next) => {
   }
 });
 
+// usersRouter.get("/:id", async (req, res, next) => {
+//   try {
+//     res.send(await authenticateUser(req.params.id));
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
 // TEST - CREATE USER
+// /api/users/login
 usersRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email, password);
   if (!email || !password) {
     next({
       name: "MissingCredentialsError",
       message: "Please supply both an email and password",
     });
+    console.log("are we working");
   }
   try {
-    const user = await fetchAllUsers({ email, password });
-    if (user) {
-      const token = jwt.sign(
-        {
-          id: user.id,
-          email,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "1w",
-        }
-      );
+    // const user = 
+    res.send(await authenticateUser(req.body));
+    // console.log('user:', user);
+    // if (user) {
+    //   const token = jwt.sign(
+    //     {
+    //       id: user.id,
+    //       email,
+    //     },
+    //     process.env.JWT,
+    //     {
+    //       expiresIn: "1w",
+    //     }
+    //   );
 
-      res.send({
-        message: "Login successful!",
-        token,
-      });
-    } else {
-      next({
-        name: "IncorrectCredentialsError",
-        message: "Username or password is incorrect",
-      });
-    }
+    //   res.send({
+    //     message: "Login successful!",
+    //     token,
+    //   });
+    // } else {
+    //   next({
+    //     name: "IncorrectCredentialsError",
+    //     message: "Username or password is incorrect",
+    //   });
+    // }
   } catch (err) {
     next(err);
   }
