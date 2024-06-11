@@ -48,15 +48,15 @@ usersRouter.post("/login", async (req, res, next) => {
 });
 
 // CREATE USER
+// /api/users/register
 usersRouter.post("/register", async (req, res, next) => {
   // const { is_admin , username, email, password } = req.body;
   // console.log('req.body:', req.body);
   try {
     res.send(await createUserandToken(req.body));
-  } catch ({ email, message }) {
-    next({ email, message });
+  } catch (error ) {
+    next(error);
   }
-
 });
 
 module.exports = usersRouter;

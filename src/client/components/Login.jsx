@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-// import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -37,7 +35,7 @@ const Login = () => {
     } catch (err) {
         console.error(`${err.name}: ${err.message}`);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();

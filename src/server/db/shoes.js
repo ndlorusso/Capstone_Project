@@ -6,8 +6,6 @@ const uuid = require("uuid");
 const express = require("express");
 const apiRouter = express.Router();
 
-// const { Client } = require("pg");
-
 // CREATE FUNCTION
 const createShoe = async ({ brand, size, price, color, shoe_picture }) => {
   const SQL = `--sql

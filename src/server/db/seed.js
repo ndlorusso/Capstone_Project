@@ -1,23 +1,21 @@
 const db = require("./client");
 const { createUser } = require("./users");
 const { createShoe } = require("./shoes");
-const { createCart } = require("./cart");
+// const { createCart } = require("./cart");
+
 const users = [
   {
     is_admin: true,
-    username: "ndlorusso",
     email: "nick@gmail.com",
     password: "abc123",
   },
   {
     is_admin: false,
-    username: "brendan123",
     email: "brendan@gmail.com",
     password: "qwe123",
   },
   {
     is_admin: false,
-    username: "desiree123",
     email: "desiree@gmail.com",
     password: "zxc3",
   },

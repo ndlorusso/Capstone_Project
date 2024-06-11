@@ -14,13 +14,6 @@ function App() {
   const [productID, setProductID] = useState(null);
   const [shoes, setShoes] = useState([]);
 
-  useEffect(() => {
-    fetch("/api/shoes")
-      .then((response) => response.json())
-      .then((data) => setShoes(data))
-      .catch((error) => console.error("Error fetching shoes:", error));
-  }, []);
-
   return (
     <>
       <NavBar />
@@ -37,7 +30,9 @@ function App() {
 
       <div id="mainContainer">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element ={ <HomePage />} />
+          <Route path="/login" element = { <Login/> } />
+          <Route path="/register" element = { <Register/>} />
         </Routes>
       </div>
     </>
