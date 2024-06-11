@@ -24,6 +24,7 @@
   max-width: 300px;
 }
 
+/* makes card jump out */
 .product-card:hover {
   transform: scale(1.05);
 }
