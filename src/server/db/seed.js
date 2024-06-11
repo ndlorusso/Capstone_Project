@@ -128,19 +128,19 @@ const insertShoes = async () => {
 };
 
 // insert Cart function
-const insertCart = async () => {
-  try {
-    for (const carts of cart) {
-      await createCart({
-        total_price: carts.total_price,
-        user_id: carts.user_id,
-      });
-    }
-    console.log("Cart inserted successfully.");
-  } catch (error) {
-    console.error("Error inserting seed data:", error);
-  }
-};
+// const insertCart = async () => {
+//   try {
+//     for (const carts of cart) {
+//       await createCart({
+//         total_price: carts.total_price,
+//         user_id: carts.user_id,
+//       });
+//     }
+//     console.log("Cart inserted successfully.");
+//   } catch (error) {
+//     console.error("Error inserting seed data:", error);
+//   }
+// };
 
 const seedDatabase = async () => {
   try {
@@ -148,7 +148,7 @@ const seedDatabase = async () => {
     await createTables();
     await insertUsers();
     await insertShoes();
-    await insertCart();
+    // await insertCart();
   } catch (err) {
     throw err;
   } finally {

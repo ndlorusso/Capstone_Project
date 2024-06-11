@@ -47,13 +47,13 @@ shoesRouter.delete("/:id", async (req, res, next) => {
   }
 });
 
-shoesRouter.get("/products", async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM shoes");
-    res.json(result.rows);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// shoesRouter.get("/products", async (req, res) => {
+//   try {
+//     const result = await db.query("SELECT * FROM shoes");
+//     res.json(result.rows);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
 module.exports = shoesRouter;
