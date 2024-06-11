@@ -24,20 +24,40 @@ const users = [
 ];
 
 const shoes = [
-  { brand: "crocs", size: 10, price: 60, color: "navy", shoe_picture: "https://images.footway.com/02/07944-00_001.png?auto=format&fit=max&w=1200", },
-  { brand: "grundens", size: 8, price: 120, color: "shrimp", shoe_picture: "https://www.sportsmans.com/medias/grundens-mens-deck-boss-ankle-fishing-boots-monument-gray-size-9-1538245-1.jpg?context=bWFzdGVyfGltYWdlc3w0NTk1MHxpbWFnZS9qcGVnfGFHRTFMMmhsWkM4eE1USTJNRFEzTVRjd05UWXpNQzh4TWpBd0xXTnZiblpsY25OcGIyNUdiM0p0WVhSZlltRnpaUzFqYjI1MlpYSnphVzl1Um05eWJXRjBYM050ZHkweE5UTTRNalExTFRFdWFuQm58NmY2MzA1ODhkMjE1Mjk0OTJlZDQ5ZGNjYzY3OTM3ZmVlNGJkMzUyZjZhZmNhNTU4Zjk3YmYzZTY4MzE1NzU3MQ", },
-  { brand: "jordans", size: 11, price: 220, color: "black", shoe_picture: "https://images.solecollector.com/images/fl_lossy,q_auto/c_crop,h_1099,w_1999,x_0,y_507/drfprzpyn6hskmyscqk9/air-jordan-1-high-lost-and-found-dz5485-612-3", },
+  {
+    brand: "Travis Scott 1 Low's",
+    size: 10,
+    price: 150,
+    color: "Reverse Mocha",
+    shoe_picture:
+      "https://img.buzzfeed.com/buzzfeed-static/complex/images/Y19jcm9wLGhfMTAyNix3XzE4MjUseF85Nix5XzY2MQ==/xukbggiq2isyr3ekafrx/travis-scott-air-jordan-1-low-reverse-mocha-release-date-dm7866-162-pair.jpg?downsize=1840:*&output-format=auto&output-quality=auto",
+  },
+  {
+    brand: "Off-White Air Jordan 1's",
+    size: 8,
+    price: 190,
+    color: "UNC",
+    shoe_picture:
+      "https://img.buzzfeed.com/buzzfeed-static/complex/images/Y19jcm9wLGhfNTMwLHdfOTQwLHhfMCx5XzMw/mbgke3li5gctnhikxqog/off-white-air-jordan-1-i-unc-release-date-aq0818-148-main.jpg?downsize=1840:*&output-format=auto&output-quality=auto",
+  },
+  {
+    brand: "Air Jordan 4 X Union",
+    size: 11,
+    price: 225,
+    color: "black",
+    shoe_picture:
+      "https://img.buzzfeed.com/buzzfeed-static/complex/images/Y19jcm9wLGhfMTEyNSx3XzIwMDAseF8wLHlfNTk4/uig5o0lyrszqf9ckutho/union-air-jordan-4-retro-off-noir-dc9533-001-pair.jpg?downsize=1840:*&output-format=auto&output-quality=auto",
+  },
 ];
 
 // how to get uuid for each users cart - use helper reduce function to grab prices and sums them up
 // user_id is NULL in postbird
-const cart = [
-  { total_price: 1000, user_id: users[0].id },
-  { total_price: 120, user_id: users[1].id },
-  { total_price: 220, user_id: users[2].id },
-];
+// const cart = [
+//   { total_price: 1000, user_id: users[0].id },
+//   { total_price: 120, user_id: users[1].id },
+//   { total_price: 220, user_id: users[2].id },
+// ];
 // how to get total price for multiple shoes
-
 
 // line 68 - NOT NULL?
 const createTables = async () => {
@@ -101,26 +121,26 @@ const insertShoes = async () => {
       });
     }
     console.log("Shoes inserted successfully.");
-    console.log('link to shoe image',shoes[0].shoe_picture);
+    console.log("link to shoe image", shoes[0].shoe_picture);
   } catch (error) {
     console.error("Error inserting seed data:", error);
   }
 };
 
 // insert Cart function
-const insertCart = async () => {
-  try {
-    for (const carts of cart) {
-      await createCart({
-        total_price: carts.total_price,
-        user_id: carts.user_id,
-      });
-    }
-    console.log("Cart inserted successfully.");
-  } catch (error) {
-    console.error("Error inserting seed data:", error);
-  }
-};
+// const insertCart = async () => {
+//   try {
+//     for (const carts of cart) {
+//       await createCart({
+//         total_price: carts.total_price,
+//         user_id: carts.user_id,
+//       });
+//     }
+//     console.log("Cart inserted successfully.");
+//   } catch (error) {
+//     console.error("Error inserting seed data:", error);
+//   }
+// };
 
 const seedDatabase = async () => {
   try {
@@ -128,7 +148,7 @@ const seedDatabase = async () => {
     await createTables();
     await insertUsers();
     await insertShoes();
-    await insertCart();
+    // await insertCart();
   } catch (err) {
     throw err;
   } finally {
