@@ -12,16 +12,15 @@ const usersRouter = require("../api/users");
 const apiRouter = express.Router();
 
 // CREATE USER FUNCTION
-const createUser = async ({ is_admin, username, email, password }) => {
+const createUser = async ({ is_admin, email, password }) => {
   const SQL = `--sql
-    INSERT INTO users(id, is_admin, username, email, password)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO users(id, is_admin, email, password)
+    VALUES ($1, $2, $3, $4)
     RETURNING *
     `;
   const response = await db.query(SQL, [
     uuid.v4(),
     is_admin,
-    username,
     email,
     await bcrypt.hash(password, SALT_COUNT),
   ]);
@@ -36,16 +35,6 @@ const fetchAllUsers = async () => {
   const response = await db.query(SQL);
   return response.rows;
 };
-
-// GET ONE USER
-// const fetchOneUser = async (id) => {
-//   const SQL = `--sql
-//   SELECT * from users
-//   WHERE id = $1
-//   `;
-//   const response = await db.query(SQL, [id]);
-//   return response.rows;
-// };
 
 // TEST - AUTHENTICATE USER FUNCTION
 const authenticateUser = async ( { email, password } ) => {
@@ -67,6 +56,13 @@ const authenticateUser = async ( { email, password } ) => {
   // console.log('lincoln');
   const token = await jwt.sign({id: response.rows[0].id}, JWT);
   console.log('token:', token);
+  return { token };
+};
+
+
+const createUserandToken = async ({ email, password }) => {
+  const user = await createUser({ email, password });
+  const token = await jwt.sign({ id: user.id }, JWT);
   return { token };
 };
 
@@ -133,7 +129,7 @@ const authenticateUser = async ( { email, password } ) => {
 module.exports = {
   createUser,
   fetchAllUsers,
-  // fetchOneUser,
   authenticateUser,
+  createUserandToken,
   // getUserByEmail
 };

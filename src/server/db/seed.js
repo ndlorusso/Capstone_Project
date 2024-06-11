@@ -69,7 +69,6 @@ const createTables = async () => {
   CREATE TABLE users(
     id UUID PRIMARY KEY,
     is_admin BOOLEAN DEFAULT FALSE,
-    username VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL
   );
@@ -98,7 +97,6 @@ const insertUsers = async () => {
     for (const user of users) {
       await createUser({
         is_admin: user.is_admin,
-        username: user.username,
         email: user.email,
         password: user.password,
       });
