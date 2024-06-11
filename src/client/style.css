@@ -1,3 +1,21 @@
+@media (max-width: 768px) {
+  .product-card {
+      width: calc(50% - 2rem);
+  }
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: medium;
+  padding: 1,1,1,1,
+}
+
 .App {
   display: flex;
   flex-direction: column;
