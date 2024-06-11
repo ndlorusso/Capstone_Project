@@ -59,7 +59,6 @@ const authenticateUser = async ( { email, password } ) => {
   return { token };
 };
 
-
 const createUserandToken = async ({ email, password }) => {
   const user = await createUser({ email, password });
   const token = await jwt.sign({ id: user.id }, JWT);
