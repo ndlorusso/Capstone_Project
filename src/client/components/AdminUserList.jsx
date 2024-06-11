@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { fetchAllUsers } from "../API/index";
 
 const AdminUserList = () => {
   const [users, setUsers] = useState([]);

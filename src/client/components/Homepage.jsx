@@ -1,23 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-import ProductCard from './ProductCard';
+import axios from "axios";
 
 const HomePage = () => {
-  const [products, setProducts] = useState([]);
+  const [shoes, setShoes] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/products')
-      .then(response => setProducts(response.data))
-      .catch(error => console.error(error));
+    axios
+      .get("/api/shoes")
+      .then((response) => setShoes(response.data))
+      .catch((error) => console.error(error));
   }, []);
+
+  const shoesArray = Array.isArray(shoes) ? shoes : [];
 
   return (
     <div className="home-page">
       <h1>All Products</h1>
       <div className="product-list">
-        {products.map(product => (
-          <ProductCard key={product.id} product={product} />
+        {shoesArray.map((shoe) => (
+          <Link
+            to={`/shoes/${shoes.id}`}
+            key={shoe.id}
+            className="product-link"
+          >
+            <div className="product-card">
+              <div className="product-info">
+                <img src={shoe.shoe_picture} alt={shoe.brand} />
+                <h2>{shoe.brand}</h2>
+                <p>Size: {shoe.size}</p>
+                <p>Color: {shoe.color}</p>
+                <p>Price: ${shoe.price}</p>
+              </div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
@@ -25,26 +41,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
-
-// const HomePage = () => {
-//   const [products, setProducts] = useState([]);
-
-// const Homepage = () => {
-//   return (
-//     <>
-//       <h1>Welcome to Shoe Emporium</h1>
-//       <div>
-//         {/* <Link to="/adminProductList">Manage Products</Link>
-//         <Link to="/adminUserList">Manage Users</Link> */}
-//         <Link to="/ProductDetails">Product Details</Link>
-//         <Link to="/ProductList">Product List</Link>
-        
-//        <Link to="/login">Login</Link>
-//        </div>
-//     </>
-//   );
-// };
-
-// export default Homepage;
