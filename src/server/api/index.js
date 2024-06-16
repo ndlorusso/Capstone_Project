@@ -38,6 +38,7 @@ apiRouter.use('/users', usersRouter);
 const shoesRouter = require('./shoes');
 apiRouter.use('/shoes', shoesRouter);
 
+// /api/cart
 const cartRouter = require('./cart');
 apiRouter.use('/cart', cartRouter);
 

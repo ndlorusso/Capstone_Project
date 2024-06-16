@@ -5,14 +5,25 @@ const JWT = process.env.JWT;
 
 const {
   createUser,
+  createUserandToken,
   fetchAllUsers,
   // fetchOneUser,
   authenticateUser,
-  createUserandToken,
+  findUserByToken,
   // getUserByEmail
 } = require("../db");
 
+const isLoggedIn = async (req, res, next ) => {
+  try {
+    req.user = await findUserByToken(req.headers.authorization);
+    next();
+  } catch (error) {
+    console.log("Error: is Not logged in?");
+  }
+};
+
 // GET ALL USERS - api/users
+// <---------------------------  ADMIN SHOULD BE ABLE TO VIEW ALL USERS ---------------------------------------->
 usersRouter.get('/', async (req, res, next) => {
   try {
     res.send(await fetchAllUsers());
@@ -21,9 +32,11 @@ usersRouter.get('/', async (req, res, next) => {
   }
 });
 
+
+// FIND SPEFIC USER BY ID
 // usersRouter.get("/:id", async (req, res, next) => {
 //   try {
-//     res.send(await authenticateUser(req.params.id));
+//     res.send(await findUserByToken(req.params.id));
 //   } catch (error) {
 //     next(error);
 //   }
@@ -31,9 +44,9 @@ usersRouter.get('/', async (req, res, next) => {
 
 // WORKS - login user with token
 // /api/users/login
-usersRouter.post("/login", async (req, res, next) => {
+usersRouter.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password);
+  // console.log(email, password);
   if (!email || !password) {
     next({
       name: "MissingCredentialsError",
