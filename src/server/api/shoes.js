@@ -1,8 +1,13 @@
 const express = require("express");
 const shoesRouter = express.Router();
-const { fetchAllShoes, fetchOneShoe, createShoe } = require("../db/shoes");
+const { fetchAllShoes,
+        fetchOneShoe,
+        createShoe,
+        updateShoe,
+        deleteShoe } = require("../db/shoes");
 
 // GET ALL SHOES - /api/shoes
+// WORKING
 shoesRouter.get("/", async (req, res, next) => {
   try {
     res.send(await fetchAllShoes());
@@ -11,7 +16,8 @@ shoesRouter.get("/", async (req, res, next) => {
   }
 });
 
-//GET ONE SHOE BY uuid
+//GET ONE SHOE BY uuid - /api/shoes/shoesId
+// WORKING
 shoesRouter.get("/:id", async (req, res, next) => {
   try {
     res.send(await fetchOneShoe(req.params.id));
@@ -20,7 +26,15 @@ shoesRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-// CREATE SHOES - POST WORKING - protecteod rute admin only
+// CREATE SHOES - protected route admin only
+// POST WORKING! -
+  // {
+    // "brand": "{{$randomWord}}",
+    // "size": {{$randomInt}},
+    // "price": {{$randomInt}},
+    // "color": "{{$randomColor}}",
+    // "shoe_picture": "{{$randomImageUrl}}" 
+  // }
 shoesRouter.post("/", async (req, res, next) => {
   try {
     res.send(await createShoe(req.body));
@@ -29,19 +43,29 @@ shoesRouter.post("/", async (req, res, next) => {
   }
 });
 
-// UPDATE SHOES
-shoesRouter.patch("/:id", async (req, res, next) => {
+// <--------------- ADMIN ONLY , NEED TO TEST ----------------->
+// UPDATE SHOES 
+// "200 OK" for patch - but no update on DB ?
+// "200" OK for put - but no update on DB ?
+shoesRouter.put("/:id", async (req, res, next) => {
   try {
+  //   res.send(await updateShoe(req.body));
     res.send(await updateShoe(req.params.id, req.body));
+    console.log("req.params.id:", req.params.id);
+    console.log("req.body:",req.body);
   } catch (error) {
     next(error);
+
+    // return , req.id, req.body;
+    return req.body;
   }
 });
 
-//  DELETE SHOES
+// <--------------- ADMIN ONLY , NEED TO TEST ----------------->
+// DELETE SHOES
 shoesRouter.delete("/:id", async (req, res, next) => {
   try {
-    res.send(await deleteShoe(req.params.id));
+    res.send(await deleteShoe(req.params.id, req.body));
   } catch (error) {
     next(error);
   }

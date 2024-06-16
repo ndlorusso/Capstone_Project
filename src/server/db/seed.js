@@ -1,7 +1,7 @@
 const db = require("./client");
-const { createUser } = require("./users");
-const { createShoe } = require("./shoes");
-// const { createCart } = require("./cart");
+const { createUser, fetchAllUsers } = require("./users");
+const { createShoe, fetchAllShoes } = require("./shoes");
+const { createCart } = require("./cart");
 
 const users = [
   {
@@ -46,14 +46,46 @@ const shoes = [
     shoe_picture:
       "https://img.buzzfeed.com/buzzfeed-static/complex/images/Y19jcm9wLGhfMTEyNSx3XzIwMDAseF8wLHlfNTk4/uig5o0lyrszqf9ckutho/union-air-jordan-4-retro-off-noir-dc9533-001-pair.jpg?downsize=1840:*&output-format=auto&output-quality=auto",
   },
+  {
+    brand: "Grundens",
+    size: 8,
+    price: 125,
+    color: "black camo",
+    shoe_picture:
+      "https://grundens.com/cdn/shop/files/60008_908_01.jpg?v=1707975370",
+  },
+  {
+    brand: "Crocs",
+    size: 10,
+    price: 60,
+    color: "hot pink",
+    shoe_picture:
+      "https://media.crocs.com/images/t_pdphero/f_auto%2Cq_auto/products/10001_6UB_ALT100/crocs",
+  },
+  {
+    brand: "Nike Air Monarch IV",
+    size: 9,
+    price: 60,
+    color: "white/navy blue",
+    shoe_picture:
+      "https://academy.scene7.com/is/image/academy/20372911?$pdp-gallery-ng$",
+  },
+  {
+    brand: "Nike Air Max 1/97 Wotherspoon",
+    size: 10,
+    price: 600,
+    color: "multicolor",
+    shoe_picture:
+      "https://www.sneakerfiles.com/wp-content/uploads/2018/02/sean-wotherspoon-nike-air-max-1-97-AJ4219-400-side.png",
+  },
 ];
 
 // how to get uuid for each users cart - use helper reduce function to grab prices and sums them up
-// user_id is NULL in postbird
+// // user_id is NULL in postbird
 // const cart = [
-//   { total_price: 1000, user_id: users[0].id },
-//   { total_price: 120, user_id: users[1].id },
-//   { total_price: 220, user_id: users[2].id },
+  // { total_price: 1000, user_id: users[0].id},
+  // { total_price: 120, user_id: users[1].id },
+  // { total_price: 220, user_id: users[2].id },
 // ];
 // how to get total price for multiple shoes
 
@@ -100,10 +132,14 @@ const insertUsers = async () => {
       });
     }
     console.log("Users inserted successfully.");
+    // console.log('users:', users);
   } catch (error) {
     console.error("Error inserting seed data:", error);
   }
 };
+
+// const createdUsers = await fetchAllUsers();
+// console.log(createdUsers);
 
 const insertShoes = async () => {
   try {
@@ -117,26 +153,39 @@ const insertShoes = async () => {
       });
     }
     console.log("Shoes inserted successfully.");
-    console.log("link to shoe image", shoes[0].shoe_picture);
+    // console.log("link to shoe image", shoes[0].shoe_picture);
   } catch (error) {
     console.error("Error inserting seed data:", error);
   }
 };
 
 // insert Cart function
-// const insertCart = async () => {
-//   try {
-//     for (const carts of cart) {
-//       await createCart({
-//         total_price: carts.total_price,
-//         user_id: carts.user_id,
-//       });
-//     }
-//     console.log("Cart inserted successfully.");
-//   } catch (error) {
-//     console.error("Error inserting seed data:", error);
-//   }
-// };
+const insertCart = async () => {
+  try {
+    const createdUsers = await fetchAllUsers();
+    // const createdShoes = await fetchAllShoes();
+
+    // console.log('createdUsers:', createdUsers);
+    // console.log('created User 1 uuid', createdUsers[0].id);
+    // console.log(users);
+    // await createCart({
+    //   total_price: 1000,
+    //   user_id: users[0].id,
+    // });
+    // for (const carts of cart) {
+      // console.log(carts);
+
+      await createCart({
+        total_price: 2000,
+        // shoes: createdShoes[0],
+        user_id: createdUsers[0].id,
+      });
+    // }
+    console.log("Cart inserted successfully.");
+  } catch (error) {
+    console.error("Error inserting seed data:", error);
+  }
+};
 
 const seedDatabase = async () => {
   try {
@@ -144,7 +193,7 @@ const seedDatabase = async () => {
     await createTables();
     await insertUsers();
     await insertShoes();
-    // await insertCart();
+    await insertCart();
   } catch (err) {
     throw err;
   } finally {

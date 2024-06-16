@@ -30,9 +30,10 @@ function App() {
 
       <div id="mainContainer">
         <Routes>
-          <Route path="/" element ={ <HomePage />} />
-          <Route path="/login" element = { <Login/> } />
-          <Route path="/register" element = { <Register/>} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/shoes/:id" element={<ProductDetails />} />
         </Routes>
       </div>
     </>

@@ -45,8 +45,8 @@ const authenticateUser = async ( { email, password } ) => {
   WHERE email = $1
   `;
   const response = await db.query(SQL, [email]);
-  console.log('response:', response.rows[0].password);
-  console.log((await bcrypt.compare(password, response.rows[0].password)) === true );
+  // console.log('response:', response.rows[0].password);
+  // console.log((await bcrypt.compare(password, response.rows[0].password)) === true );
 
   if (!response.rows.length || (await bcrypt.compare(password, response.rows[0].password)) === false ) {
     const error = Error('not authenticated');
@@ -55,7 +55,7 @@ const authenticateUser = async ( { email, password } ) => {
   };
   // console.log('lincoln');
   const token = await jwt.sign({id: response.rows[0].id}, JWT);
-  console.log('token:', token);
+  // console.log('token:', token);
   return { token };
 };
 
@@ -66,29 +66,30 @@ const createUserandToken = async ({ email, password }) => {
 };
 
 // FIND USER BY TOKEN FUNCION
-// const findUserByToken = async (token) => {
-//     let id
-//     try {
-//         const payload = await jwt.verify(token, JWT)
-//         id = payload.id
-//     } catch (ex) {
-//         const error = Error('not authorized')
-//         error.status = 401
-//         throw error
-//     }
-//     const SQL = /*SQL*/ `
-//     SELECT id, username
-//     FROM users
-//     WHERE id = $1
-//     `
-//     const res = await client.query(SQL, [id])
-//     if(!res.rows.length) {
-//         const error = Error('Not Authorized')
-//         error.status = 401
-//         throw error
-//     }
-//     return res.rows[0]
-// }
+const findUserByToken = async (token) => {
+  console.log('find User by token:', token);
+    let id;
+    try {
+        const payload = await jwt.verify(token, JWT);
+        id = payload.id;
+    } catch (ex) {
+        const error = Error('not authorized');
+        error.status = 401;
+        throw error;
+    }
+    const SQL = /*SQL*/ `
+    SELECT id, username
+    FROM users
+    WHERE id = $1
+    `
+    const response = await client.query(SQL, [id])
+    if(!response.rows.length) {
+        const error = Error('Not Authorized')
+        error.status = 401
+        throw error
+    }
+    return response.rows[0];
+};
 
 // TEMPLATE CODE
 // const getUser = async({email, password}) => {
@@ -130,5 +131,6 @@ module.exports = {
   fetchAllUsers,
   authenticateUser,
   createUserandToken,
+  findUserByToken,
   // getUserByEmail
 };
