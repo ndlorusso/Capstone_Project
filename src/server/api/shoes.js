@@ -2,6 +2,31 @@ const express = require("express");
 const shoesRouter = express.Router();
 const { fetchAllShoes, fetchOneShoe, createShoe, updateShoe, deleteShoe } = require("../db/shoes");
 
+// Middleware to check if user is admin
+const isAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next(); // User is authenticated and is an admin
+  } else {
+    res.status(403).send({ error: "Access denied" }); // Forbidden
+  }
+};
+
+// Middleware to require authentication
+const requireAuth = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).send({ error: 'Authorization required' });
+  }
+  try {
+    const token = authHeader.replace('Bearer ', '');
+    const user = await findUserByToken(token);
+    req.user = user;
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
 // GET ALL SHOES - /api/shoes
 shoesRouter.get("/", async (req, res, next) => {
   try {
@@ -26,7 +51,7 @@ shoesRouter.get("/:id", async (req, res, next) => {
 });
 
 // CREATE SHOES - protected route admin only
-shoesRouter.post("/", async (req, res, next) => {
+shoesRouter.post("/", requireAuth, isAdmin, async (req, res, next) => {
   try {
     res.send(await createShoe(req.body));
   } catch (error) {
@@ -35,7 +60,7 @@ shoesRouter.post("/", async (req, res, next) => {
 });
 
 // UPDATE SHOES - admin only
-shoesRouter.put("/:id", async (req, res, next) => {
+shoesRouter.put("/:id", requireAuth, isAdmin, async (req, res, next) => {
   try {
     const updatedShoe = await updateShoe(req.params.id, req.body);
     res.send(updatedShoe);
@@ -45,7 +70,7 @@ shoesRouter.put("/:id", async (req, res, next) => {
 });
 
 // DELETE SHOES - admin only
-shoesRouter.delete("/:id", async (req, res, next) => {
+shoesRouter.delete("/:id", requireAuth, isAdmin, async (req, res, next) => {
   try {
     res.send(await deleteShoe(req.params.id));
   } catch (error) {
