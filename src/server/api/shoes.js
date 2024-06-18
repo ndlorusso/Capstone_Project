@@ -1,10 +1,12 @@
 const express = require("express");
 const shoesRouter = express.Router();
-const { fetchAllShoes,
-        fetchOneShoe,
-        createShoe,
-        updateShoe,
-        deleteShoe } = require("../db/shoes");
+const {
+  fetchAllShoes,
+  fetchOneShoe,
+  createShoe,
+  updateShoe,
+  deleteShoe,
+} = require("../db/shoes");
 
 // GET ALL SHOES - /api/shoes
 // WORKING
@@ -28,13 +30,13 @@ shoesRouter.get("/:id", async (req, res, next) => {
 
 // CREATE SHOES - protected route admin only
 // POST WORKING! -
-  // {
-    // "brand": "{{$randomWord}}",
-    // "size": {{$randomInt}},
-    // "price": {{$randomInt}},
-    // "color": "{{$randomColor}}",
-    // "shoe_picture": "{{$randomImageUrl}}" 
-  // }
+// {
+// "brand": "{{$randomWord}}",
+// "size": {{$randomInt}},
+// "price": {{$randomInt}},
+// "color": "{{$randomColor}}",
+// "shoe_picture": "{{$randomImageUrl}}"
+// }
 shoesRouter.post("/", async (req, res, next) => {
   try {
     res.send(await createShoe(req.body));
@@ -44,15 +46,15 @@ shoesRouter.post("/", async (req, res, next) => {
 });
 
 // <--------------- ADMIN ONLY , NEED TO TEST ----------------->
-// UPDATE SHOES 
+// UPDATE SHOES
 // "200 OK" for patch - but no update on DB ?
 // "200" OK for put - but no update on DB ?
 shoesRouter.put("/:id", async (req, res, next) => {
   try {
-  //   res.send(await updateShoe(req.body));
+    //   res.send(await updateShoe(req.body));
     res.send(await updateShoe(req.params.id, req.body));
     console.log("req.params.id:", req.params.id);
-    console.log("req.body:",req.body);
+    console.log("req.body:", req.body);
   } catch (error) {
     next(error);
 

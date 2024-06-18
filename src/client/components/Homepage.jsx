@@ -4,7 +4,7 @@ import axios from "axios";
 
 const HomePage = () => {
   const [shoes, setShoes] = useState([]);
-
+  console.log(shoes);
   useEffect(() => {
     axios
       .get("/api/shoes")
@@ -13,17 +13,13 @@ const HomePage = () => {
   }, []);
 
   const shoesArray = Array.isArray(shoes) ? shoes : [];
-
+  console.log(shoesArray);
   return (
     <div className="home-page">
       <h1>All Products</h1>
       <div className="product-list">
         {shoesArray.map((shoe) => (
-          <Link
-            to={`/shoes/${shoes.id}`}
-            key={shoe.id}
-            className="product-link"
-          >
+          <Link to={`/shoes/${shoe.id}`} key={shoe.id} className="product-link">
             <div className="product-card">
               <div className="product-info">
                 <img src={shoe.shoe_picture} alt={shoe.brand} />
