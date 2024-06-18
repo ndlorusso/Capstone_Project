@@ -21,12 +21,12 @@ function App() {
         All Shoes
       </Link>
       <Link to="/new-shoe"> | New Shoe | </Link>
-      <Link
+      {/* <Link
         to={productID ? `/products/${productID}` : "#"}
         style={{ color: "#e79a2ec4" }}
       >
         Single Product Details
-      </Link>
+      </Link> */}
 
       <div id="mainContainer">
         <Routes>

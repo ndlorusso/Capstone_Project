@@ -21,33 +21,43 @@ const fetchOneShoe = async (id) => {
   return response.rows;
 };
 
-// CREATE FUNCTION - POST ROUTE 
+// CREATE FUNCTION - POST ROUTE
 const createShoe = async ({ brand, size, price, color, shoe_picture }) => {
   const SQL = `--sql
     INSERT INTO shoes(id, brand, size, price, color, shoe_picture)
     VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *
     `;
-  const response = await db.query(SQL, 
-    [uuid.v4(), brand, size, price, color,shoe_picture,]);
+  const response = await db.query(SQL, [
+    uuid.v4(),
+    brand,
+    size,
+    price,
+    color,
+    shoe_picture,
+  ]);
   return response.rows[0];
 };
 
 // <--------------- ADMIN ONLY , NEED TO TEST ----------------->
 // "200 OK" - but no update on DB ?
-const updateShoe = async ( { brand, size, price, color, shoe_picture } ) => {
+const updateShoe = async ({ brand, size, price, color, shoe_picture }) => {
   const SQL = `--sql
   UPDATE shoes 
   SET brand = $2, size = $3, price = $4, color = $5, shoe_picture = $6
   WHERE id = $1
   `;
-  const response =
-   await db.query(SQL, 
-    [uuid.v4(), brand, size, price, color, shoe_picture]);
-    console.log("response:", response);
+  const response = await db.query(SQL, [
+    uuid.v4(),
+    brand,
+    size,
+    price,
+    color,
+    shoe_picture,
+  ]);
+  console.log("response:", response);
   return response;
 };
-
 
 // BRENDAN UPDATE SHOE
 // const updateShoe = async ( { brand, size, price, color, shoe_picture }) => {
@@ -70,16 +80,14 @@ const updateShoe = async ( { brand, size, price, color, shoe_picture } ) => {
 //   return response.rows;
 // };
 
-
 // <--------------- ADMIN ONLY , NEED TO TEST ----------------->
-const deleteShoe = async ( { brand, size, price, color, shoe_picture } ) => {
+const deleteShoe = async ({ brand, size, price, color, shoe_picture }) => {
   const SQL = `--sql
   DELETE FROM shoes 
   WHERE id=$1, brand=$2, size=$3, price=$4, color=$5. shoe_picture=$6
   `;
-  await db.query(SQL, 
-    [uuid.v4(), brand, size, price, color, shoe_picture]);
-}; 
+  await db.query(SQL, [uuid.v4(), brand, size, price, color, shoe_picture]);
+};
 
 module.exports = {
   createShoe,
