@@ -1,18 +1,34 @@
 const express = require("express");
 const shoesRouter = express.Router();
-const {
-  fetchAllShoes,
-  fetchOneShoe,
-  createShoe,
-  updateShoe,
-  deleteShoe,
-} = require("../db/shoes");
-
+const { fetchAllShoes, fetchOneShoe, createShoe, updateShoe, deleteShoe } = require("../db/shoes");
 const { createOrderItem,
-} =    require('../db/cart');
+} = require('../db/cart');
+// Middleware to check if user is admin
+// const isAdmin = (req, res, next) => {
+//   if (req.user && req.user.isAdmin) {
+//     next(); // User is authenticated and is an admin
+//   } else {
+//     res.status(403).send({ error: "Access denied" }); // Forbidden
+//   }
+// };
+
+// Middleware to require authentication
+const requireAuth = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).send({ error: 'Authorization required' });
+  }
+  try {
+    const token = authHeader.replace('Bearer ', '');
+    const user = await findUserByToken(token);
+    req.user = user;
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
 
 // GET ALL SHOES - /api/shoes
-// WORKING
 shoesRouter.get("/", async (req, res, next) => {
   try {
     res.send(await fetchAllShoes());
@@ -21,26 +37,22 @@ shoesRouter.get("/", async (req, res, next) => {
   }
 });
 
-//GET ONE SHOE BY uuid - /api/shoes/shoesId
-// WORKING
+// GET ONE SHOE BY uuid - /api/shoes/:id
 shoesRouter.get("/:id", async (req, res, next) => {
   try {
-    res.send(await fetchOneShoe(req.params.id));
+    const shoe = await fetchOneShoe(req.params.id);
+    if (shoe) {
+      res.json(shoe);
+    } else {
+      res.status(404).send({ error: "Shoe not found" });
+    }
   } catch (error) {
     next(error);
   }
 });
 
 // CREATE SHOES - protected route admin only
-// POST WORKING! -
-// {
-// "brand": "{{$randomWord}}",
-// "size": {{$randomInt}},
-// "price": {{$randomInt}},
-// "color": "{{$randomColor}}",
-// "shoe_picture": "{{$randomImageUrl}}"
-// }
-shoesRouter.post("/", async (req, res, next) => {
+shoesRouter.post("/", requireAuth, isAdmin, async (req, res, next) => {
   try {
     res.send(await createShoe(req.body));
   } catch (error) {
@@ -96,18 +108,24 @@ shoesRouter.delete("/:id", async (req, res, next) => {
     console.log("req.params.id:", req.params.id);
     console.log("req.body:", req.body);
     res.send(await deleteShoe(req.body));
+    
+// UPDATE SHOES - admin only
+shoesRouter.put("/:id", requireAuth, isAdmin, async (req, res, next) => {
+  try {
+    const updatedShoe = await updateShoe(req.params.id, req.body);
+    res.send(updatedShoe);
   } catch (error) {
     next(error);
   }
 });
 
-// shoesRouter.get("/products", async (req, res) => {
-//   try {
-//     const result = await db.query("SELECT * FROM shoes");
-//     res.json(result.rows);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
+// DELETE SHOES - admin only
+shoesRouter.delete("/:id", requireAuth, isAdmin, async (req, res, next) => {
+  try {
+    res.send(await deleteShoe(req.params.id));
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = shoesRouter;
