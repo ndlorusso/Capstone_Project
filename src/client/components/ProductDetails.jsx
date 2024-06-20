@@ -27,6 +27,13 @@ const ProductDetails = () => {
     return <div>Loading...</div>;
   }
 
+  const handleClick = async () => {
+    try {
+      setSuccessMessage("shoe checked out successfully!");
+    } catch (error) {
+      set(error.message);
+    }
+  };
   return (
     <div className="product-card">
       <div className="product-info">
@@ -35,9 +42,9 @@ const ProductDetails = () => {
         <p>{shoe.color}</p>
         <p>Size: {shoe.size}</p>
         <p>Price: ${shoe.price}</p>
+        <button onClick={handleClick}>Check Out</button>
       </div>
     </div>
   );
 };
-
 export default ProductDetails;

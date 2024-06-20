@@ -2,13 +2,28 @@ const { response } = require("express");
 const db = require("./client");
 const uuid = require('uuid');
 
-const createCart = async ({total_price, user_id}) => {
+const createOrderItem = async ({quantity, price, shoe_id}) => {
+  const SQL = `--sql
+  INSERT INTO orderItem(id, quantity, price, shoe_id)
+  VALUES ($1, $2, $3, $4)
+  RETRUNING *
+  `;
+  const response = await db.query (SQL, 
+    [quantity, price, shoe_id]);
+    console.log("respone:", response);
+    return response.rows[0];
+};
+
+const createCart = async ({ total_price, orderItem_id, user_id }) => {
     const SQL = `--sql
-    INSERT INTO cart(id, total_price, user_id)
-    VALUES ($1, $2, $3)
+    INSERT INTO cart(id, total_price, orderItem_id , user_id)
+    VALUES ($1, $2, $3, $4)
     RETURNING *
     `;
-    const response = await db.query(SQL, [uuid.v4(), total_price, user_id]);
+    const response = await db.query(SQL,
+      [uuid.v4(), total_price, orderItem_id, user_id]);
+    // console.log("response:", response);
+    // console.log("response.rows[0]:", response.rows[0]);
     return response.rows[0];
   };
 
@@ -41,6 +56,8 @@ module.exports = {
     createCart,
     fetchUserCart,
     updateUserCart,
+    createCart,
+    createOrderItem,
 };
 
 //CREATE CART!! FUNCTION! 
