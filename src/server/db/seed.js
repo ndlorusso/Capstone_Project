@@ -92,9 +92,10 @@ const shoes = [
 // line 68 - NOT NULL?
 const createTables = async () => {
   const SQL = `--sql
-  DROP TABLE IF EXISTS cart;
-  DROP TABLE IF EXISTS shoes;
-  DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS cart;
+    DROP TABLE IF EXISTS orderItem;
+    DROP TABLE IF EXISTS shoes;
+    DROP TABLE IF EXISTS users;
 
   CREATE TABLE users(
     id UUID PRIMARY KEY,
@@ -111,13 +112,21 @@ const createTables = async () => {
     color VARCHAR(255) NOT NUll,
     shoe_picture VARCHAR(1000) NOT NULL
   );
-
-  CREATE TABLE cart(
+   
+CREATE TABLE orderItem(
     id UUID PRIMARY KEY,
-    total_price INTEGER NOT NULL,
-    user_id UUID REFERENCES users(id),
-    CONSTRAINT unique_user_cart UNIQUE (user_id)
-  );
+    quantity INTEGER NOT NULL,
+    price DECIMAL (10,2) NOT NULL,
+    shoe_id UUID REFERENCES shoes(id)
+);
+
+CREATE TABLE cart(
+  id UUID PRIMARY KEY,
+  total_price INTEGER NOT NULL,
+  orderItem_id UUID REFERENCES orderItem(id),
+  user_id UUID REFERENCES users(id),
+  CONSTRAINT unique_user_cart UNIQUE (user_id)
+);
 `;
   await db.query(SQL);
 };
@@ -158,6 +167,14 @@ const insertShoes = async () => {
     console.error("Error inserting seed data:", error);
   }
 };
+
+// const insertOrder = async () => {
+//   try {
+//     for (orders of order)
+//   } catch (error) {
+//     console.error("Error inserting seed data", error);
+//   }
+// };
 
 // insert Cart function
 const insertCart = async () => {
