@@ -3,14 +3,15 @@ const shoesRouter = express.Router();
 const { fetchAllShoes, fetchOneShoe, createShoe, updateShoe, deleteShoe } = require("../db/shoes");
 const { createOrderItem,
 } = require('../db/cart');
+
 // Middleware to check if user is admin
-// const isAdmin = (req, res, next) => {
-//   if (req.user && req.user.isAdmin) {
-//     next(); // User is authenticated and is an admin
-//   } else {
-//     res.status(403).send({ error: "Access denied" }); // Forbidden
-//   }
-// };
+const isAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next(); // User is authenticated and is an admin
+  } else {
+    res.status(403).send({ error: "Access denied" }); // Forbidden
+  }
+};
 
 // Middleware to require authentication
 const requireAuth = async (req, res, next) => {
@@ -52,7 +53,8 @@ shoesRouter.get("/:id", async (req, res, next) => {
 });
 
 // CREATE SHOES - protected route admin only
-shoesRouter.post("/", requireAuth, isAdmin, async (req, res, next) => {
+// isAdmin
+shoesRouter.post("/", requireAuth, async (req, res, next) => {
   try {
     res.send(await createShoe(req.body));
   } catch (error) {
@@ -88,6 +90,8 @@ shoesRouter.post("/:id/orderItem", async (req, res, next) => {
 //   }
 // });
 
+// UPDATE SHOE
+// <--------------- ADMIN ONLY , NEED TO TEST ----------------->
 shoesRouter.put("/:id", async (req, res, next) => {
   try {
     const updatedShoe = await updateShoe({
@@ -108,6 +112,10 @@ shoesRouter.delete("/:id", async (req, res, next) => {
     console.log("req.params.id:", req.params.id);
     console.log("req.body:", req.body);
     res.send(await deleteShoe(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
     
 // UPDATE SHOES - admin only
 shoesRouter.put("/:id", requireAuth, isAdmin, async (req, res, next) => {

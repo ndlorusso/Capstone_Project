@@ -3,7 +3,7 @@ const cartRouter = express.Router();
 const { fetchUserCart,
         createCart,
         updateUserCart,
-        // createOrderItem,
+        createOrderItem,
 } =    require('../db/cart');
 const apiRouter = require('.');
 
@@ -16,13 +16,27 @@ cartRouter.get('/users/:id', async (req, res, next) => {
     }
 });
 
+// post order item to cart
+cartRouter.post('/users/:id', async (req, res, next) => {
+  const { quantity, price, shoe_id } = req.body;
+  try {
+    res.send(createOrderItem(req.body));
+    
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Add to cart Button
 // orderItem
 // total price 
 // quantity 
 // shoeID
-// <----------------------- MIGHT NOT NEED ----------------------->
-// apiRouter.post('/:users/:id/orderItem'), async (req, res , next) => {
+// <----------------------- ADD TO CART ----------------------->
+// /api/cart/:id
+// pass in --> users/:id/orderItem/:id = req.body
+// apiRouter.post('/cart/:id'), async (req, res , next) => {
+//   const { user_id, orderItem_id, total_price, quantity } = req.body;
 //     try {
 //         res.send(createOrderItem(req.body));
 //     } catch (error) {

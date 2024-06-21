@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 // TEST FOR API.ROUTER
 const express = require("express");
 const usersRouter = require("../api/users");
+const { createCart } = require("./cart");
 const apiRouter = express.Router();
 
 // CREATE USER FUNCTION
@@ -24,6 +25,8 @@ const createUser = async ({ is_admin, email, password }) => {
     email,
     await bcrypt.hash(password, SALT_COUNT),
   ]);
+  const user_id = response.rows[0].id;
+  createCart({user_id});
   return response.rows[0];
 };
 
@@ -53,15 +56,15 @@ const authenticateUser = async ( { email, password } ) => {
     error.status = 401;
     throw error;
   };
-  // console.log('lincoln');
   const token = await jwt.sign({id: response.rows[0].id}, JWT);
-  // console.log('token:', token);
   return { token };
 };
 
 const createUserandToken = async ({ email, password }) => {
   const user = await createUser({ email, password });
   const token = await jwt.sign({ id: user.id }, JWT);
+  const user_id = user.id;
+  createCart({user_id});
   return { token };
 };
 

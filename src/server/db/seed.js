@@ -122,7 +122,7 @@ CREATE TABLE orderItem(
 
 CREATE TABLE cart(
   id UUID PRIMARY KEY,
-  total_price INTEGER NOT NULL,
+  total_price INTEGER,
   orderItem_id UUID REFERENCES orderItem(id),
   user_id UUID REFERENCES users(id),
   CONSTRAINT unique_user_cart UNIQUE (user_id)
