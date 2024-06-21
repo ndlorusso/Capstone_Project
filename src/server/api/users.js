@@ -12,7 +12,10 @@ const {
   findUserByToken,
   // getUserByEmail
 } = require("../db");
+const { createCart } = require("../db/cart");
 
+
+// isLoggedIn middleware
 const isLoggedIn = async (req, res, next ) => {
   try {
     req.user = await findUserByToken(req.headers.authorization);
@@ -55,9 +58,11 @@ usersRouter.post('/login', async (req, res, next) => {
   }
   try {
     res.send(await authenticateUser(req.body));
+    //get user cart
   } catch (err) {
     next(err);
   }
+  // createCart();
 });
 
 // CREATE USER
@@ -67,6 +72,7 @@ usersRouter.post("/register", async (req, res, next) => {
   // console.log('req.body:', req.body);
   try {
     res.send(await createUserandToken(req.body));
+    console.log("req.body:", req.body);
   } catch (error ) {
     next(error);
   }

@@ -18,16 +18,18 @@ const CartPage = () => {
 
   return (
     <div className="cart-page">
-      <h1>Your Cart</h1>
+      <h1>orderItem in DB, 
+        Checkout totals all orderItems
+      </h1>
       <ul>
-        {cart.map(item => (
+        {/* {cart.map(item => (
           <li key={item.product.id}>
             {item.product.name} - {item.quantity}
             <button onClick={() => handleRemove(item.product.id)}>Remove</button>
           </li>
-        ))}
+        ))} */}
       </ul>
-      <button>Checkout</button>
+      <button>Checkout, totals all quantity and price</button>
     </div>
   );
 };

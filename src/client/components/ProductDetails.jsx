@@ -29,6 +29,9 @@ const ProductDetails = () => {
 
   const handleClick = async () => {
     try {
+    // CALL BACKEND TO ADD TO CART
+    // POST
+    // await fetch localhost:3000/api/cart
       setSuccessMessage("shoe checked out successfully!");
     } catch (error) {
       set(error.message);
@@ -42,7 +45,7 @@ const ProductDetails = () => {
         <p>{shoe.color}</p>
         <p>Size: {shoe.size}</p>
         <p>Price: ${shoe.price}</p>
-        <button onClick={handleClick}>Check Out</button>
+        <button onClick={handleClick}>Call post "cart/users/:id" pass in quantity, price, and shoeId</button>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import "./style.css";
 import AdminProductList from "./components/AdminProductList";
 import AdminUserList from "./components/AdminUserList";
+import CartPage from "./components/CartPage";
 import HomePage from "./components/Homepage";
 import NavBar from "./components/NavBar";
 import ProductDetails from "./components/ProductDetails";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path= "/cart" element = { <CartPage/> } />
           <Route path="/shoes/:id" element={<ProductDetails />} />
         </Routes>
       </div>
