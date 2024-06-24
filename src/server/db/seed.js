@@ -177,32 +177,32 @@ const insertShoes = async () => {
 // };
 
 // insert Cart function
-const insertCart = async () => {
-  try {
-    const createdUsers = await fetchAllUsers();
-    // const createdShoes = await fetchAllShoes();
+// const insertCart = async () => {
+//   try {
+//     const createdUsers = await fetchAllUsers();
+//     // const createdShoes = await fetchAllShoes();
 
-    // console.log('createdUsers:', createdUsers);
-    // console.log('created User 1 uuid', createdUsers[0].id);
-    // console.log(users);
-    // await createCart({
-    //   total_price: 1000,
-    //   user_id: users[0].id,
-    // });
-    // for (const carts of cart) {
-      // console.log(carts);
+//     // console.log('createdUsers:', createdUsers);
+//     // console.log('created User 1 uuid', createdUsers[0].id);
+//     // console.log(users);
+//     // await createCart({
+//     //   total_price: 1000,
+//     //   user_id: users[0].id,
+//     // });
+//     // for (const carts of cart) {
+//       // console.log(carts);
 
-      await createCart({
-        total_price: 2000,
-        // shoes: createdShoes[0],
-        user_id: createdUsers[0].id,
-      });
-    // }
-    console.log("Cart inserted successfully.");
-  } catch (error) {
-    console.error("Error inserting seed data:", error);
-  }
-};
+//       await createCart({
+//         total_price: 2000,
+//         // shoes: createdShoes[0],
+//         user_id: createdUsers[0].id,
+//       });
+//     // }
+//     console.log("Cart inserted successfully.");
+//   } catch (error) {
+//     console.error("Error inserting seed data:", error);
+//   }
+// };
 
 const seedDatabase = async () => {
   try {
@@ -210,7 +210,7 @@ const seedDatabase = async () => {
     await createTables();
     await insertUsers();
     await insertShoes();
-    await insertCart();
+    // await insertCart();
   } catch (err) {
     throw err;
   } finally {

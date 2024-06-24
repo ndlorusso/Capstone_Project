@@ -13,6 +13,8 @@ const { createCart } = require("./cart");
 const apiRouter = express.Router();
 
 // CREATE USER FUNCTION
+
+
 const createUser = async ({ is_admin, email, password }) => {
   const SQL = `--sql
     INSERT INTO users(id, is_admin, email, password)
@@ -26,7 +28,7 @@ const createUser = async ({ is_admin, email, password }) => {
     await bcrypt.hash(password, SALT_COUNT),
   ]);
   const user_id = response.rows[0].id;
-  createCart({user_id});
+  // createCart({user_id});
   return response.rows[0];
 };
 

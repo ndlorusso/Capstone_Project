@@ -10,6 +10,7 @@ import NavBar from "./components/NavBar";
 import ProductDetails from "./components/ProductDetails";
 import ProductList from "./components/ProductList";
 import Register from "./components/Register";
+import CheckoutPage from "./components/CheckoutPage";
 
 function App() {
   const [productID, setProductID] = useState(null);
@@ -36,6 +37,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path= "/cart" element = { <CartPage/> } />
           <Route path="/shoes/:id" element={<ProductDetails />} />
+          <Route path="/checkout" element= {<CheckoutPage/>} />
         </Routes>
       </div>
     </>

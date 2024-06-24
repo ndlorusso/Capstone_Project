@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
-const ProductDetails = () => {
-  console.log(useParams());
-  const { id } = useParams();
-  console.log(id);
+import { useParams, useNavigate } from "react-router-dom";
+const ProductDetails = ({ userId }) => {
+// ask Mark how this works
+  const { id } = useParams(); // This id represents the shoe ID from the URL
+  const navigate = useNavigate();
   const [shoe, setShoe] = useState(null);
-  // const [quantity, setQuantity] = useState(1);
-  // const [message, setMessage] = useState("");
-
+  const [quantity, setQuantity] = useState(1);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     const fetchShoe = async () => {
       try {
         const response = await fetch(`http://localhost:3000/api/shoes/${id}`);
         const data = await response.json();
-        console.log(data[0]);
         setShoe(data[0]);
       } catch (error) {
         console.error(error);
@@ -22,19 +20,60 @@ const ProductDetails = () => {
     };
     fetchShoe();
   }, [id]);
-
   if (!shoe) {
     return <div>Loading...</div>;
   }
-
   const handleClick = async () => {
     try {
-    // CALL BACKEND TO ADD TO CART
-    // POST
-    // await fetch localhost:3000/api/cart
-      setSuccessMessage("shoe checked out successfully!");
+      console.log("logging shoe uuid", { shoeId: shoe.id });
+      const response = await fetch(
+        `http://localhost:3000/api/cart/users/${userId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quantity,
+            price: shoe.price * quantity,
+            shoe_id: shoe.id, // Sending the actual shoe ID
+          }),
+        }
+      );
+      if (response.ok) {
+        setSuccessMessage("Shoe added to cart successfully!");
+        navigate("/checkout");
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || "Failed to add to cart");
+      }
     } catch (error) {
-      set(error.message);
+      setErrorMessage(error.message);
+    }
+  };
+  const handleQuantityChange = (event) => {
+    setQuantity(parseInt(event.target.value));
+  };
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/cart/users/${userId}/items/${shoe.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        setSuccessMessage("Item deleted successfully!");
+        navigate("/");
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || "Failed to delete item");
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
     }
   };
   return (
@@ -45,7 +84,19 @@ const ProductDetails = () => {
         <p>{shoe.color}</p>
         <p>Size: {shoe.size}</p>
         <p>Price: ${shoe.price}</p>
-        <button onClick={handleClick}>Call post "cart/users/:id" pass in quantity, price, and shoeId</button>
+        <label>
+          Quantity:
+          <input
+            type="number"
+            value={quantity}
+            onChange={handleQuantityChange}
+            min="1"
+          />
+        </label>
+        <button onClick={handleClick}>Add to Cart</button>
+        <button onClick={handleDelete}>Delete from Cart</button>
+        {successMessage && <p>{successMessage}</p>}
+        {errorMessage && <p>{errorMessage}</p>}
       </div>
     </div>
   );

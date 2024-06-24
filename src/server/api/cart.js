@@ -17,11 +17,11 @@ cartRouter.get('/users/:id', async (req, res, next) => {
 });
 
 // post order item to cart
+// /api/cart/users/:id
 cartRouter.post('/users/:id', async (req, res, next) => {
   const { quantity, price, shoe_id } = req.body;
   try {
     res.send(createOrderItem(req.body));
-    
   } catch (error) {
     next(error);
   }
