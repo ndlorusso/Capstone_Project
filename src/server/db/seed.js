@@ -83,9 +83,9 @@ const shoes = [
 // how to get uuid for each users cart - use helper reduce function to grab prices and sums them up
 // // user_id is NULL in postbird
 // const cart = [
-  // { total_price: 1000, user_id: users[0].id},
-  // { total_price: 120, user_id: users[1].id },
-  // { total_price: 220, user_id: users[2].id },
+// { total_price: 1000, user_id: users[0].id},
+// { total_price: 120, user_id: users[1].id },
+// { total_price: 220, user_id: users[2].id },
 // ];
 // how to get total price for multiple shoes
 
@@ -115,6 +115,7 @@ const createTables = async () => {
    
 CREATE TABLE orderItem(
     id UUID PRIMARY KEY,
+    shoe_picture VARCHAR(1000) NOT NULL,
     quantity INTEGER NOT NULL,
     price DECIMAL (10,2) NOT NULL,
     shoe_id UUID REFERENCES shoes(id)

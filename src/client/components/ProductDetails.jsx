@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 const ProductDetails = ({ userId }) => {
-// ask Mark how this works
   const { id } = useParams(); // This id represents the shoe ID from the URL
   const navigate = useNavigate();
   const [shoe, setShoe] = useState(null);
@@ -38,7 +37,8 @@ const ProductDetails = ({ userId }) => {
           body: JSON.stringify({
             quantity,
             price: shoe.price * quantity,
-            shoe_id: shoe.id, // Sending the actual shoe ID
+            shoe_id: shoe.id,
+            shoe_picture: shoe.shoe_picture,
           }),
         }
       );
