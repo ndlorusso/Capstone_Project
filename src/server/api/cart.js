@@ -1,28 +1,29 @@
-const express = require('express');
-const cartRouter= express.Router();
+const express = require("express");
+const cartRouter = express.Router();
 const apiRouter = express.Router();
 // const orderItemRouter = express.Router();
-const { fetchUserCart,
-        createCart,
-        updateUserCart,
-        fetchAllOrderItems,
-        fetchOrderItem,
-        createOrderItem,
-} =    require('../db/cart');
-
+const {
+  fetchUserCart,
+  createCart,
+  updateUserCart,
+  fetchAllOrderItems,
+  fetchOrderItem,
+  createOrderItem,
+} = require("../db/cart");
 
 // cartRouter.get('/:user_id', async (req, res, next) => {
-cartRouter.get('/users/:id', async (req, res, next) => {
-    try {
-        res.send(await fetchUserCart());
-    } catch (error) {
-        next(error);
-    }
+cartRouter.get("/users/:id", async (req, res, next) => {
+  try {
+    res.send(await fetchUserCart());
+  } catch (error) {
+    next(error);
+  }
 });
 
 // post order item to cart
 // /api/cart/users/:id
-cartRouter.post('/users/:id', async (req, res, next) => {
+//
+cartRouter.post("/users/:id", async (req, res, next) => {
   const { quantity, price, shoe_id } = req.body;
   try {
     res.send(createOrderItem(req.body));
@@ -31,9 +32,8 @@ cartRouter.post('/users/:id', async (req, res, next) => {
   }
 });
 
-
 // FETCH ALL OrderItems
-apiRouter.get('/orderItem', async (req, res, next) => {
+cartRouter.get("/orderItem", async (req, res, next) => {
   try {
     res.send(await fetchAllOrderItems());
   } catch (error) {
@@ -42,7 +42,7 @@ apiRouter.get('/orderItem', async (req, res, next) => {
 });
 
 // how to get newly posted orderItem iD
-apiRouter.get('/orderItem/:id', async (req, res, next) => {
+cartRouter.get("/orderItem/:id", async (req, res, next) => {
   try {
     res.send(await fetchOrderItem(req.params.id));
   } catch (error) {
@@ -50,11 +50,10 @@ apiRouter.get('/orderItem/:id', async (req, res, next) => {
   }
 });
 
-
 // Add to cart Button
 // orderItem
-// total price 
-// quantity 
+// total price
+// quantity
 // shoeID
 // <----------------------- ADD TO CART ----------------------->
 // /api/cart/:id
@@ -70,11 +69,11 @@ apiRouter.get('/orderItem/:id', async (req, res, next) => {
 
 // 404 not found
 cartRouter.put("/:user_id", async (req, res, next) => {
-    try {
-      res.send(await createCart(req.body));
-    } catch (error) {
-      next(error);
-    }
-  });
+  try {
+    res.send(await createCart(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = cartRouter;
