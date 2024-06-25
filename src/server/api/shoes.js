@@ -41,12 +41,7 @@ shoesRouter.get("/", async (req, res, next) => {
 // GET ONE SHOE BY uuid - /api/shoes/:id
 shoesRouter.get("/:id", async (req, res, next) => {
   try {
-    const shoe = await fetchOneShoe(req.params.id);
-    if (shoe) {
-      res.json(shoe);
-    } else {
-      res.status(404).send({ error: "Shoe not found" });
-    }
+    res.send(await fetchOneShoe(req.params.id));
   } catch (error) {
     next(error);
   }

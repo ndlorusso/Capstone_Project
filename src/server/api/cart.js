@@ -1,11 +1,15 @@
 const express = require('express');
-const cartRouter = express.Router();
+const cartRouter= express.Router();
+const apiRouter = express.Router();
+// const orderItemRouter = express.Router();
 const { fetchUserCart,
         createCart,
         updateUserCart,
+        fetchAllOrderItems,
+        fetchOrderItem,
         createOrderItem,
 } =    require('../db/cart');
-const apiRouter = require('.');
+
 
 // cartRouter.get('/:user_id', async (req, res, next) => {
 cartRouter.get('/users/:id', async (req, res, next) => {
@@ -26,6 +30,26 @@ cartRouter.post('/users/:id', async (req, res, next) => {
     next(error);
   }
 });
+
+
+// FETCH ALL OrderItems
+apiRouter.get('/orderItem', async (req, res, next) => {
+  try {
+    res.send(await fetchAllOrderItems());
+  } catch (error) {
+    next(error);
+  }
+});
+
+// how to get newly posted orderItem iD
+apiRouter.get('/orderItem/:id', async (req, res, next) => {
+  try {
+    res.send(await fetchOrderItem(req.params.id));
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 // Add to cart Button
 // orderItem

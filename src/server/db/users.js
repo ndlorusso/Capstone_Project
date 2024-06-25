@@ -13,8 +13,6 @@ const { createCart } = require("./cart");
 const apiRouter = express.Router();
 
 // CREATE USER FUNCTION
-
-
 const createUser = async ({ is_admin, email, password }) => {
   const SQL = `--sql
     INSERT INTO users(id, is_admin, email, password)

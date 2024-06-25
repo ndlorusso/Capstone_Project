@@ -8,6 +8,7 @@ const ProductDetails = ({ userId }) => {
   const [quantity, setQuantity] = useState(1);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
     const fetchShoe = async () => {
       try {
@@ -23,6 +24,7 @@ const ProductDetails = ({ userId }) => {
   if (!shoe) {
     return <div>Loading...</div>;
   }
+
   const handleClick = async () => {
     try {
       console.log("logging shoe uuid", { shoeId: shoe.id });
@@ -41,8 +43,8 @@ const ProductDetails = ({ userId }) => {
         }
       );
       if (response.ok) {
-        setSuccessMessage("Shoe added to cart successfully!");
-        navigate("/checkout");
+        setSuccessMessage("Shoe added to bag successfully!");
+        navigate("/bag");
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message || "Failed to add to cart");
@@ -93,7 +95,7 @@ const ProductDetails = ({ userId }) => {
             min="1"
           />
         </label>
-        <button onClick={handleClick}>Add to Cart</button>
+        <button onClick={handleClick}>Add to Bag</button>
         <button onClick={handleDelete}>Delete from Cart</button>
         {successMessage && <p>{successMessage}</p>}
         {errorMessage && <p>{errorMessage}</p>}
