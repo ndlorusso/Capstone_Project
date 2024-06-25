@@ -37,13 +37,13 @@ usersRouter.get('/', async (req, res, next) => {
 
 
 // FIND SPEFIC USER BY ID
-// usersRouter.get("/:id", async (req, res, next) => {
-//   try {
-//     res.send(await findUserByToken(req.params.id));
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+usersRouter.get("/:id", async (req, res, next) => {
+  try {
+    res.send(await findUserByToken(req.params.id));
+  } catch (error) {
+    next(error);
+  }
+});
 
 // WORKS - login user with token
 // /api/users/login
