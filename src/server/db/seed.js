@@ -80,16 +80,12 @@ const shoes = [
   },
 ];
 
-// how to get uuid for each users cart - use helper reduce function to grab prices and sums them up
-// // user_id is NULL in postbird
 // const cart = [
-// { total_price: 1000, user_id: users[0].id},
-// { total_price: 120, user_id: users[1].id },
-// { total_price: 220, user_id: users[2].id },
+//   { total_price: 1000, user_id: users[0].id},
+//   { total_price: 120, user_id: users[1].id },
+//   { total_price: 220, user_id: users[2].id },
 // ];
-// how to get total price for multiple shoes
 
-// line 68 - NOT NULL?
 const createTables = async () => {
   const SQL = `--sql
     DROP TABLE IF EXISTS cart;
@@ -148,9 +144,6 @@ const insertUsers = async () => {
   }
 };
 
-// const createdUsers = await fetchAllUsers();
-// console.log(createdUsers);
-
 const insertShoes = async () => {
   try {
     for (const shoe of shoes) {
@@ -169,41 +162,32 @@ const insertShoes = async () => {
   }
 };
 
-// const insertOrder = async () => {
-//   try {
-//     for (orders of order)
-//   } catch (error) {
-//     console.error("Error inserting seed data", error);
-//   }
-// };
-
 // insert Cart function
-// const insertCart = async () => {
-//   try {
-//     const createdUsers = await fetchAllUsers();
-//     // const createdShoes = await fetchAllShoes();
+const insertCart = async () => {
+  try {
+    const createdUsers = await fetchAllUsers();
+    // const createdShoes = await fetchAllShoes();
 
-//     // console.log('createdUsers:', createdUsers);
-//     // console.log('created User 1 uuid', createdUsers[0].id);
-//     // console.log(users);
-//     // await createCart({
-//     //   total_price: 1000,
-//     //   user_id: users[0].id,
-//     // });
-//     // for (const carts of cart) {
-//       // console.log(carts);
-
-//       await createCart({
-//         total_price: 2000,
-//         // shoes: createdShoes[0],
-//         user_id: createdUsers[0].id,
-//       });
-//     // }
-//     console.log("Cart inserted successfully.");
-//   } catch (error) {
-//     console.error("Error inserting seed data:", error);
-//   }
-// };
+    // console.log('createdUsers:', createdUsers);
+    // console.log('created User 1 uuid', createdUsers[0].id);
+    // console.log(users);
+    // await createCart({
+    //   total_price: 1000,
+    //   user_id: users[0].id,
+    // });
+    // for (const carts of cart) {
+      // console.log(carts);creat
+      await createCart({
+        total_price: 2000,
+        // shoes: createdShoes[0],
+        user_id: createdUsers[0].id,
+      });
+    // }
+    console.log("Cart inserted successfully.");
+  } catch (error) {
+    console.error("Error inserting seed data:", error);
+  }
+};
 
 const seedDatabase = async () => {
   try {
@@ -211,7 +195,7 @@ const seedDatabase = async () => {
     await createTables();
     await insertUsers();
     await insertShoes();
-    // await insertCart();
+    await insertCart();
   } catch (err) {
     throw err;
   } finally {

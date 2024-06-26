@@ -2,6 +2,7 @@ const express = require("express");
 const cartRouter = express.Router();
 const apiRouter = express.Router();
 // const orderItemRouter = express.Router();
+
 const {
   fetchUserCart,
   createCart,
@@ -9,7 +10,23 @@ const {
   fetchAllOrderItems,
   fetchOrderItem,
   createOrderItem,
+  deleteOrderItem,
 } = require("../db/cart");
+
+const {  findUserByToken }
+= require("../db/users");
+
+// MIDDLEWARE
+const isLoggedIn = async (req, res, next ) => {
+  console.log('licnoln');
+  try {
+    console.log("req.headers:", req.headers);
+    req.user = await findUserByToken(req.headers.authorization);
+    next();
+  } catch (error) {
+    console.log("Error: is Not logged in?");
+  }
+};
 
 // cartRouter.get('/:user_id', async (req, res, next) => {
 cartRouter.get("/users/:id", async (req, res, next) => {
@@ -20,10 +37,10 @@ cartRouter.get("/users/:id", async (req, res, next) => {
   }
 });
 
-// post order item to cart
+// post shoes to order items
 // /api/cart/users/:id
 //
-cartRouter.post("/users/:id", async (req, res, next) => {
+cartRouter.post("/users/:id", isLoggedIn, async (req, res, next) => {
   const { quantity, price, shoe_id } = req.body;
   try {
     res.send(createOrderItem(req.body));
@@ -50,22 +67,28 @@ cartRouter.get("/orderItem/:id", async (req, res, next) => {
   }
 });
 
-// Add to cart Button
-// orderItem
-// total price
-// quantity
-// shoeID
+// Delete an order item
+cartRouter.delete("/orderItem/:id", async (req, res, next) => {
+  try {
+    res.send(await deleteOrderItem(req.params.id));
+  } catch (error) {
+    next(error);
+  }
+});
+
+// CHECKOUT Button
+// ADD orderItems to CART, POST
+// total price, orderItem_id, user_id
 // <----------------------- ADD TO CART ----------------------->
 // /api/cart/:id
-// pass in --> users/:id/orderItem/:id = req.body
-// apiRouter.post('/cart/:id'), async (req, res , next) => {
-//   const { user_id, orderItem_id, total_price, quantity } = req.body;
-//     try {
-//         res.send(createOrderItem(req.body));
-//     } catch (error) {
-//         next(error)
-//     }
-// };
+cartRouter.post('/orderItem/:id'), async (req, res , next) => {
+  const { user_id, orderItem_id, total_price, quantity } = req.body;
+    try {
+        res.send(createOrderItem(req.body));
+    } catch (error) {
+        next(error)
+    }
+};
 
 // 404 not found
 cartRouter.put("/:user_id", async (req, res, next) => {

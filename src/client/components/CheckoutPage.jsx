@@ -8,6 +8,7 @@ const CheckoutPage = ({ userId }) => {
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -30,6 +31,7 @@ const CheckoutPage = ({ userId }) => {
     };
     fetchCart();
   }, [userId]);
+  
   const handlePlaceOrder = async () => {
     try {
       const response = await axios.post("/api/orders", {

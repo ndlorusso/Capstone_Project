@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
 const ProductDetails = ({ userId }) => {
   const { id } = useParams(); // This id represents the shoe ID from the URL
   const navigate = useNavigate();
@@ -26,13 +27,16 @@ const ProductDetails = ({ userId }) => {
 
   const handleClick = async () => {
     try {
-      console.log("logging shoe uuid", { shoeId: shoe.id });
+      const token = window.localStorage.getItem("token");
+      console.log("token", token);
+      console.log("userId:", userId);
       const response = await fetch(
         `http://localhost:3000/api/cart/users/${userId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             quantity,
@@ -42,6 +46,7 @@ const ProductDetails = ({ userId }) => {
           }),
         }
       );
+      console.log(response);
       if (response.ok) {
         setSuccessMessage("Shoe added to bag successfully!");
         navigate("/bag");
@@ -56,6 +61,7 @@ const ProductDetails = ({ userId }) => {
   const handleQuantityChange = (event) => {
     setQuantity(parseInt(event.target.value));
   };
+
   const handleDelete = async () => {
     try {
       const response = await fetch(
@@ -78,6 +84,7 @@ const ProductDetails = ({ userId }) => {
       setErrorMessage(error.message);
     }
   };
+
   return (
     <div className="product-card">
       <div className="product-info">
@@ -103,4 +110,5 @@ const ProductDetails = ({ userId }) => {
     </div>
   );
 };
+
 export default ProductDetails;

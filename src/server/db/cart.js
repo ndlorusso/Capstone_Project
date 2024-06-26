@@ -18,6 +18,7 @@ const createOrderItem = async ({ quantity, price, shoe_id, shoe_picture }) => {
   // const orderItem = response.rows[0];
   return response.rows[0];
 };
+
 // orderItem table need that id
 // FETCH ALL OrderItems
 const fetchAllOrderItems = async () => {
@@ -75,6 +76,16 @@ const updateUserCart = async ({ total_price, user_id }) => {
   console.log("user_id", user_id);
 };
 
+const deleteOrderItem = async (id) => {
+  const SQL = `--sql
+  DELETE from orderItem
+  WHERE id = $1
+  RETURNING *
+  `;
+  const response = await db.query(SQL, [id]);
+  return response.rows[0];
+};
+
 module.exports = {
   createCart,
   fetchUserCart,
@@ -83,4 +94,5 @@ module.exports = {
   createOrderItem,
   fetchOrderItem,
   fetchAllOrderItems,
+  deleteOrderItem,
 };
