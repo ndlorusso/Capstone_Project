@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const express = require("express");
 const usersRouter = require("../api/users");
 const { createCart } = require("./cart");
+const id = require("volleyball/lib/id");
 const apiRouter = express.Router();
 
 // CREATE USER FUNCTION
@@ -40,6 +41,7 @@ const fetchAllUsers = async () => {
 };
 
 // TEST - AUTHENTICATE USER FUNCTION
+// FOR LOGIN
 const authenticateUser = async ( { email, password } ) => {
   // console.log('authenticate user', email, password);
   const SQL = `--sql
@@ -57,9 +59,11 @@ const authenticateUser = async ( { email, password } ) => {
     throw error;
   };
   const token = await jwt.sign({id: response.rows[0].id}, JWT);
-  return { token };
+  const id = response.rows[0].id;
+  return { token, id };
 };
 
+// FOR REGISTER FUNCITON
 const createUserandToken = async ({ email, password }) => {
   const user = await createUser({ email, password });
   const token = await jwt.sign({ id: user.id }, JWT);
@@ -70,6 +74,7 @@ const createUserandToken = async ({ email, password }) => {
 
 // FIND USER BY TOKEN FUNCION
 const findUserByToken = async (token) => {
+  console.log("licnoln");
   console.log('find User by token:', token);
     let id;
     try {
@@ -85,7 +90,7 @@ const findUserByToken = async (token) => {
     FROM users
     WHERE id = $1
     `
-    const response = await client.query(SQL, [id])
+    const response = await db.query(SQL, [id])
     if(!response.rows.length) {
         const error = Error('Not Authorized')
         error.status = 401

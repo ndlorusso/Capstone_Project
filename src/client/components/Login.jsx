@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Login = () => {
+const Login = ({setUserId}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -26,7 +26,10 @@ const Login = () => {
             })
         });
         const result = await response.json();
-        setMessage(result.message);
+        setUserId(result.id);
+        console.log("result:", result);
+        console.log("result from login:", result.token);
+        window.localStorage.setItem("token", result.token);
         if(!response.ok) {
           throw(result)
         }

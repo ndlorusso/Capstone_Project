@@ -14,34 +14,26 @@ import CheckoutPage from "./components/CheckoutPage";
 import OrderItems from "./components/OrderItems"
 
 function App() {
+  const [userId, setUserId] = useState('');
   const [productID, setProductID] = useState(null);
   const [shoes, setShoes] = useState([]);
 
   return (
     <>
       <NavBar />
-      <Link to="/" style={{ color: "#858f06" }}>
-        All Shoes
-      </Link>
-      <Link to="/new-shoe"> | New Shoe | </Link>
-      {/* <Link
-        to={productID ? `/products/${productID}` : "#"}
-        style={{ color: "#e79a2ec4" }}
-      >
-        Single Product Details
-      </Link> */}
 
       <div id="mainContainer">
+        
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setUserId={setUserId} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/bag" element={<OrderItems />} />
           <Route path= "/cart" element = { <CartPage/> } />
-          <Route path="/shoes/:id" element={<ProductDetails />} />
+          <Route path="/shoes/:id" element={<ProductDetails userId={userId} />} />
           <Route path="/checkout" element= {<CheckoutPage/>} />
         </Routes>
-      </div>
+        </div>
     </>
   );
 }
