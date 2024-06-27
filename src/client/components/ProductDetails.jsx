@@ -30,13 +30,14 @@ const ProductDetails = ({ userId }) => {
       const token = window.localStorage.getItem("token");
       console.log("token", token);
       console.log("userId:", userId);
+      console.log(`Bearer ${token})`);
       const response = await fetch(
         `http://localhost:3000/api/cart/users/${userId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+            authorization: `Bearer ${token})`,            
           },
           body: JSON.stringify({
             quantity,
@@ -46,7 +47,7 @@ const ProductDetails = ({ userId }) => {
           }),
         }
       );
-      console.log(response);
+      console.log("response:",response);
       if (response.ok) {
         setSuccessMessage("Shoe added to bag successfully!");
         navigate("/bag");
@@ -58,6 +59,7 @@ const ProductDetails = ({ userId }) => {
       setErrorMessage(error.message);
     }
   };
+
   const handleQuantityChange = (event) => {
     setQuantity(parseInt(event.target.value));
   };

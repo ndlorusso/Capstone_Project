@@ -11,29 +11,49 @@ import ProductDetails from "./components/ProductDetails";
 import ProductList from "./components/ProductList";
 import Register from "./components/Register";
 import CheckoutPage from "./components/CheckoutPage";
-import OrderItems from "./components/OrderItems"
+import OrderItems from "./components/OrderItems";
 
 function App() {
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [productID, setProductID] = useState(null);
   const [shoes, setShoes] = useState([]);
 
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    window.localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setUserId(null);
+  };
+
   return (
     <>
-      <NavBar />
-
+      <NavBar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <div id="mainContainer">
-        
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login setUserId={setUserId} />} />
+          <Route
+            path="/login"
+            element={
+              <Login setUserId={setUserId} setIsLoggedIn={setIsLoggedIn} /> //setIsLoggedIn to update the login state if login is successful
+            }
+          />
           <Route path="/register" element={<Register />} />
           <Route path="/bag" element={<OrderItems />} />
-          <Route path= "/cart" element = { <CartPage/> } />
-          <Route path="/shoes/:id" element={<ProductDetails userId={userId} />} />
-          <Route path="/checkout" element= {<CheckoutPage/>} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route
+            path="/shoes/:id"
+            element={<ProductDetails userId={userId} />}
+          />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
-        </div>
+      </div>
     </>
   );
 }

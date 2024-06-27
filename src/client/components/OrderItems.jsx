@@ -32,6 +32,7 @@ const OrderItems = () => {
       console.error(error);
     }
   };
+  
   const handleCheckout = () => {
     navigate('/checkout');
     // POST order items to cart onClick

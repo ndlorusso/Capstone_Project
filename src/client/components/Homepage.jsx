@@ -14,6 +14,7 @@ const HomePage = () => {
 
   const shoesArray = Array.isArray(shoes) ? shoes : [];
   console.log(shoesArray);
+  
   return (
     <div className="home-page">
       <h1>All Products</h1>
