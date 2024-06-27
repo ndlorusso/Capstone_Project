@@ -18,7 +18,7 @@ const {  findUserByToken }
 
 // MIDDLEWARE
 const isLoggedIn = async (req, res, next ) => {
-  console.log('licnoln');
+  console.log('licnoln'); // code not hitting here
   try {
     console.log("req.headers:", req.headers);
     req.user = await findUserByToken(req.headers.authorization);
@@ -42,6 +42,7 @@ cartRouter.get("/users/:id", async (req, res, next) => {
 //
 cartRouter.post("/users/:id", isLoggedIn, async (req, res, next) => {
   const { quantity, price, shoe_id } = req.body;
+  console.log("are we there yet?"); // not hitting
   try {
     res.send(createOrderItem(req.body));
   } catch (error) {
