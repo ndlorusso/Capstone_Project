@@ -37,7 +37,7 @@ const ProductDetails = ({ userId }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${token})`,            
+            authorization: `Bearer ${token}`,            
           },
           body: JSON.stringify({
             quantity,
