@@ -37,14 +37,14 @@ const register = async () => {
   };
 
   return (
-    <div className="register">
-      <h1>Register</h1>
+    <div className="register-form">
+      <h1>Register:  </h1>
       <form onSubmit={handleSubmit}>
-        <label>Email:</label>
+        <label>Email:  </label>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <label>Password:</label>
+        <label> Password:  </label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button type="submit">Register</button>
+        <button className = "register-button" type="submit">Register</button>
       </form>
     </div>
   );

@@ -21,8 +21,8 @@ const HomePage = () => {
       <div className="product-list">
         {shoesArray.map((shoe) => (
           <Link to={`/shoes/${shoe.id}`} key={shoe.id} className="product-link">
-            <div className="product-card">
-              <div className="product-info">
+            <div className="homepage-card">
+              <div className="homepage-info">
                 <img src={shoe.shoe_picture} alt={shoe.brand} />
                 <h2>{shoe.brand}</h2>
                 <p>Size: {shoe.size}</p>

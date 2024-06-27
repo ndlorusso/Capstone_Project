@@ -42,7 +42,10 @@ const Login = ({ setUserId, setIsLoggedIn }) => {
   };
 
   return (
-    <div>
+    <>
+
+
+    <div className="login-form" >
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -54,7 +57,9 @@ const Login = ({ setUserId, setIsLoggedIn }) => {
             onChange={handleEmailChange}
             required
           />
-        </div>
+        </div> 
+
+
         <div>
           <label htmlFor="password">Password:</label>
           <input
@@ -65,10 +70,15 @@ const Login = ({ setUserId, setIsLoggedIn }) => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button className="login-button" type="submit">Login</button>
       </form>
       <p>{message}</p>
-    </div>
+      </div>
+
+
+
+
+      </>
   );
 };
 

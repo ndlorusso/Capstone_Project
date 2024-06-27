@@ -80,12 +80,6 @@ const shoes = [
   },
 ];
 
-// const cart = [
-//   { total_price: 1000, user_id: users[0].id},
-//   { total_price: 120, user_id: users[1].id },
-//   { total_price: 220, user_id: users[2].id },
-// ];
-
 const createTables = async () => {
   const SQL = `--sql
     DROP TABLE IF EXISTS cart;
@@ -163,31 +157,31 @@ const insertShoes = async () => {
 };
 
 // insert Cart function
-const insertCart = async () => {
-  try {
-    const createdUsers = await fetchAllUsers();
-    // const createdShoes = await fetchAllShoes();
+// const insertCart = async () => {
+//   try {
+//     const createdUsers = await fetchAllUsers();
+//     // const createdShoes = await fetchAllShoes();
 
-    // console.log('createdUsers:', createdUsers);
-    // console.log('created User 1 uuid', createdUsers[0].id);
-    // console.log(users);
-    // await createCart({
-    //   total_price: 1000,
-    //   user_id: users[0].id,
-    // });
-    // for (const carts of cart) {
-      // console.log(carts);creat
-      await createCart({
-        total_price: 2000,
-        // shoes: createdShoes[0],
-        user_id: createdUsers[0].id,
-      });
-    // }
-    console.log("Cart inserted successfully.");
-  } catch (error) {
-    console.error("Error inserting seed data:", error);
-  }
-};
+//     // console.log('createdUsers:', createdUsers);
+//     // console.log('created User 1 uuid', createdUsers[0].id);
+//     // console.log(users);
+//     // await createCart({
+//     //   total_price: 1000,
+//     //   user_id: users[0].id,
+//     // });
+//     // for (const carts of cart) {
+//       // console.log(carts);creat
+//       await createCart({
+//         total_price: 2000,
+//         // shoes: createdShoes[0],
+//         user_id: createdUsers[0].id,
+//       });
+//     // }
+//     console.log("Cart inserted successfully.");
+//   } catch (error) {
+//     console.error("Error inserting seed data:", error);
+//   }
+// };
 
 const seedDatabase = async () => {
   try {
@@ -195,7 +189,7 @@ const seedDatabase = async () => {
     await createTables();
     await insertUsers();
     await insertShoes();
-    await insertCart();
+    // await insertCart();
   } catch (err) {
     throw err;
   } finally {
