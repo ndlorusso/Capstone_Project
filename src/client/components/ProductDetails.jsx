@@ -37,7 +37,7 @@ const ProductDetails = ({ userId }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,            
+            authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             quantity,
@@ -47,7 +47,7 @@ const ProductDetails = ({ userId }) => {
           }),
         }
       );
-      console.log("response:",response);
+      console.log("response:", response);
       if (response.ok) {
         setSuccessMessage("Shoe added to bag successfully!");
         navigate("/bag");

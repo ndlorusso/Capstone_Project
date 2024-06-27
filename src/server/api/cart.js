@@ -13,12 +13,11 @@ const {
   deleteOrderItem,
 } = require("../db/cart");
 
-const {  findUserByToken }
-= require("../db/users");
+const { findUserByToken } = require("../db/users");
 
 // MIDDLEWARE
-const isLoggedIn = async (req, res, next ) => {
-  console.log('licnoln'); // code not hitting here
+const isLoggedIn = async (req, res, next) => {
+  console.log("licnoln"); // code not hitting here
   try {
     console.log("req.headers:", req.headers);
     req.user = await findUserByToken(req.headers.authorization);
@@ -40,7 +39,7 @@ cartRouter.get("/users/:id", async (req, res, next) => {
 // post shoes to order items
 // /api/cart/users/:id
 //
-cartRouter.post("/users/:id", isLoggedIn, async (req, res, next) => {
+cartRouter.post("/users/:id", async (req, res, next) => {
   const { quantity, price, shoe_id } = req.body;
   console.log("are we there yet?"); // not hitting
   try {
@@ -82,14 +81,15 @@ cartRouter.delete("/orderItem/:id", async (req, res, next) => {
 // total price, orderItem_id, user_id
 // <----------------------- ADD TO CART ----------------------->
 // /api/cart/:id
-cartRouter.post('/orderItem/:id'), async (req, res , next) => {
-  const { user_id, orderItem_id, total_price, quantity } = req.body;
+cartRouter.post("/orderItem/:id"),
+  async (req, res, next) => {
+    const { user_id, orderItem_id, total_price, quantity } = req.body;
     try {
-        res.send(createOrderItem(req.body));
+      res.send(createOrderItem(req.body));
     } catch (error) {
-        next(error)
+      next(error);
     }
-};
+  };
 
 // 404 not found
 cartRouter.put("/:user_id", async (req, res, next) => {
