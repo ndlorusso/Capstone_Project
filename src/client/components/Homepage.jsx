@@ -4,7 +4,6 @@ import axios from "axios";
 
 const HomePage = () => {
   const [shoes, setShoes] = useState([]);
-  console.log(shoes);
   useEffect(() => {
     axios
       .get("/api/shoes")
@@ -13,8 +12,7 @@ const HomePage = () => {
   }, []);
 
   const shoesArray = Array.isArray(shoes) ? shoes : [];
-  console.log(shoesArray);
-  
+
   return (
     <div className="home-page">
       <h1>All Products</h1>
@@ -23,7 +21,7 @@ const HomePage = () => {
           <Link to={`/shoes/${shoe.id}`} key={shoe.id} className="product-link">
             <div className="homepage-card">
               <div className="homepage-info">
-                <img src={shoe.shoe_picture} alt={shoe.brand} />
+                <img src={shoe.shoe_picture} alt={shoe.brand} className="homepage-img" />
                 <h2>{shoe.brand}</h2>
                 <p>Size: {shoe.size}</p>
                 <p>Color: {shoe.color}</p>

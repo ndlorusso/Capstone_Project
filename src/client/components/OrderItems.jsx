@@ -8,9 +8,7 @@ const OrderItems = () => {
   useEffect(() => {
     const fetchOrderItems = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/api/cart/orderItem`
-        );
+        const response = await fetch(`http://localhost:3000/api/cart/orderItem`);
         const data = await response.json();
         setShoes(data);
       } catch (error) {
@@ -22,12 +20,9 @@ const OrderItems = () => {
 
   const handleRemove = async (shoeId) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/cart/orderItem/${shoeId}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`http://localhost:3000/api/cart/orderItem/${shoeId}`, {
+        method: "DELETE",
+      });
 
       if (response.ok) {
         setShoes(shoes.filter((shoe) => shoe.id !== shoeId));
@@ -48,7 +43,6 @@ const OrderItems = () => {
   };
 
   const orderItemsArray = Array.isArray(shoes) ? shoes : [];
-  console.log("orderItemsArray:", orderItemsArray);
 
   return (
     <div className="home-page">
@@ -58,7 +52,7 @@ const OrderItems = () => {
           <div key={shoe.id} className="product-card">
             <div className="product-info">
               <img src={shoe.shoe_picture} alt={shoe.brand} />
-              <h2>{shoe.brand}</h2>
+              <h2 className="product-brand">{shoe.brand}</h2>
               <p>Size: {shoe.size}</p>
               <p>Price: ${shoe.price}</p>
               <p>Quantity: {shoe.quantity}</p>

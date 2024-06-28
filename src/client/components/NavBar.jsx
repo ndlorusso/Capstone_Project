@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-//                props to conditionally render
+
 const NavBar = ({ isLoggedIn, handleLogout }) => {
   return (
     <nav className="nav-bar">
@@ -17,7 +17,7 @@ const NavBar = ({ isLoggedIn, handleLogout }) => {
         {isLoggedIn ? (
           <>
             <li>
-              <button onClick={handleLogout}>Logout</button>
+              <button className="logout-button" onClick={handleLogout}>Logout</button>
             </li>
           </>
         ) : (

@@ -45,40 +45,40 @@ const Login = ({ setUserId, setIsLoggedIn }) => {
     <>
 
 
-    <div className="login-form" >
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-            required
-          />
-        </div> 
+      <div className="login-page" >
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+          </div>
 
 
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-            required
-          />
-        </div>
-        <button className="login-button" type="submit">Login</button>
-      </form>
-      <p>{message}</p>
+          <div>
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={handlePasswordChange}
+              required
+            />
+          </div>
+          <button className="login-button" type="submit">Login</button>
+        </form>
+        <p>{message}</p>
       </div>
 
 
 
 
-      </>
+    </>
   );
 };
 
