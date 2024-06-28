@@ -174,7 +174,9 @@ html {
   color: #fff;
   padding: 20px;
 }
+.checkout-button {
 
+}
 
 .checkout-page h1 f {
   margin-bottom: 20px;
@@ -272,10 +274,16 @@ html {
   align-items: center;
 }
 
-input,
+input {
+  width: calc(100%);
+  padding: 8px;
+  height: 30px;
+}
+
+
 select,
 button {
-  width: calc(50% - 40px);
+  width: calc(40%);
   margin: 10px 20px;
   padding: 8px;
   border-radius: 4px;
