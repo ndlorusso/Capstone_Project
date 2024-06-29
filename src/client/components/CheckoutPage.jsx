@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const CheckoutPage = ({ userId }) => {
@@ -20,7 +19,7 @@ const CheckoutPage = ({ userId }) => {
   useEffect(() => {
     const fetchOrderItems = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/cart/orderItem`);
+        const response = await fetch('http://localhost:3000/api/cart/orderItem');
         const data = await response.json();
         setCart(data); // useState - sets cart variable
       } catch (error) {
@@ -34,31 +33,18 @@ const CheckoutPage = ({ userId }) => {
 
   const handlePlaceOrder = async () => {
     try {
-      const response = await axios.post("/api/orders", {
-        userId,
-        cart,
-        shippingAddress: {
-          streetAddress,
-          city,
-          zipCode,
-          state,
-        },
-        paymentMethod: {
-          cardNumber,
-          expirationDate,
-          securityCode,
-          type: paymentMethod,
-        },
-        totalPrice,
+      const response = await fetch('http://localhost:3000/api/cart/orderItem', {
+        method: 'DELETE',
       });
-      if (response.status === 200) {
-        setMessage("Order placed successfully!");
-        navigate("/");
-      } else {
-        setMessage("Failed to place order");
+      if (!response.ok) {       // code to fake a checkout, 500 error
+        setCart(null);
+        navigate("/successPage");
       }
+      console.log("response,:" , response);
+      const data = await response.json();
+      console.log("data:", data);
     } catch (error) {
-      setMessage(error.message);
+      console.error('error checking out!');
     }
   };
 

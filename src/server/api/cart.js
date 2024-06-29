@@ -10,6 +10,7 @@ const {
   fetchAllOrderItems,
   fetchOrderItem,
   createOrderItem,
+  deleteAllOrderItems,
   deleteOrderItem,
 } = require("../db/cart");
 
@@ -62,6 +63,14 @@ cartRouter.get("/orderItem", async (req, res, next) => {
 cartRouter.get("/orderItem/:id", async (req, res, next) => {
   try {
     res.send(await fetchOrderItem(req.params.id));
+  } catch (error) {
+    next(error);
+  }
+});
+
+cartRouter.delete("/orderItem", async (req, res, next) => {
+  try {
+    res.send(await deleteAllOrderItems(req.params));
   } catch (error) {
     next(error);
   }

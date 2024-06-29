@@ -76,6 +76,17 @@ const updateUserCart = async ({ total_price, user_id }) => {
   console.log("user_id", user_id);
 };
 
+const deleteAllOrderItems = async () => {
+  const SQL = `--sql
+  DELETE from orderItem
+  WHERE id = $1
+  RETURNING *
+  `;
+  const response = await db.query(SQL, [id]);
+  console.log("response:", response);
+  return response.rows[0];
+};
+
 const deleteOrderItem = async (id) => {
   const SQL = `--sql
   DELETE from orderItem
@@ -94,5 +105,6 @@ module.exports = {
   createOrderItem,
   fetchOrderItem,
   fetchAllOrderItems,
+  deleteAllOrderItems,
   deleteOrderItem,
 };

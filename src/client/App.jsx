@@ -12,6 +12,7 @@ import ProductList from "./components/ProductList";
 import Register from "./components/Register";
 import CheckoutPage from "./components/CheckoutPage";
 import OrderItems from "./components/OrderItems";
+import SuccessPage from "./components/SuccessPage";
 
 function App() {
   const [userId, setUserId] = useState("");
@@ -52,6 +53,7 @@ function App() {
             element={<ProductDetails userId={userId} />}
           />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/successPage" element= {<SuccessPage/>} />
         </Routes>
       </div>
     </>
