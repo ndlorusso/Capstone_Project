@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Register = ({ setUserId, setIsLoggedIn }) => {
+const navigate = useNavigate('');
+
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -26,14 +29,14 @@ const Register = ({ setUserId, setIsLoggedIn }) => {
       if (!response.ok) {
         throw new Error(result.message);
       }
-      setUserId(result.id);
-      setIsLoggedIn(true);
+      // navigate('/login');
       window.localStorage.setItem('token', result.token);
       setEmail('');
       setPassword('');
     } catch (err) {
       setMessage(err.message);
     }
+    navigate('/login'); // Why you not worky
   };
 
   const handleSubmit = (e) => {

@@ -5,7 +5,9 @@ const NavBar = ({ isLoggedIn, handleLogout }) => {
   return (
     <nav className="nav-bar">
       <div className="navbar-logo">
-        <Link to="/">KickVault</Link>
+        <Link to="/">
+          KickVault <span role="img" aria-label="sports shoe">👟</span>
+        </Link>
       </div>
       <ul className="navbar-links">
         <li>
