@@ -68,25 +68,6 @@ shoesRouter.post("/:id/orderItem", async (req, res, next) => {
 });
 
 // <--------------- ADMIN ONLY , NEED TO TEST ----------------->
-// UPDATE SHOES
-// "200 OK" for patch - but no update on DB ?
-// "200" OK for put - but no update on DB ?
-// shoesRouter.put("/:id", async (req, res, next) => {
-//   try {
-//     console.log("req.params.id:", req.params.id);
-//     console.log("req.body:", req.body);
-//     res.send(await updateShoe(...req.body, req.params.id));
-//     console.log("req.params.id:", req.params.id);
-//     console.log("req.body:", req.body);
-//   } catch (error) {
-//     next(error);
-//     // return , req.id, req.body;
-//     // return req.body;
-//   }
-// });
-
-// UPDATE SHOE
-// <--------------- ADMIN ONLY , NEED TO TEST ----------------->
 shoesRouter.put("/:id", async (req, res, next) => {
   try {
     const updatedShoe = await updateShoe({

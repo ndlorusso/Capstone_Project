@@ -1,7 +1,6 @@
 const db = require("./client");
-const { createUser, fetchAllUsers } = require("./users");
-const { createShoe, fetchAllShoes } = require("./shoes");
-const { createCart } = require("./cart");
+const { createUser } = require("./users");
+const { createShoe } = require("./shoes");
 
 const users = [
   {
@@ -132,7 +131,6 @@ const insertUsers = async () => {
       });
     }
     console.log("Users inserted successfully.");
-    // console.log('users:', users);
   } catch (error) {
     console.error("Error inserting seed data:", error);
   }
@@ -150,38 +148,10 @@ const insertShoes = async () => {
       });
     }
     console.log("Shoes inserted successfully.");
-    // console.log("link to shoe image", shoes[0].shoe_picture);
   } catch (error) {
     console.error("Error inserting seed data:", error);
   }
 };
-
-// insert Cart function
-// const insertCart = async () => {
-//   try {
-//     const createdUsers = await fetchAllUsers();
-//     // const createdShoes = await fetchAllShoes();
-
-//     // console.log('createdUsers:', createdUsers);
-//     // console.log('created User 1 uuid', createdUsers[0].id);
-//     // console.log(users);
-//     // await createCart({
-//     //   total_price: 1000,
-//     //   user_id: users[0].id,
-//     // });
-//     // for (const carts of cart) {
-//       // console.log(carts);creat
-//       await createCart({
-//         total_price: 2000,
-//         // shoes: createdShoes[0],
-//         user_id: createdUsers[0].id,
-//       });
-//     // }
-//     console.log("Cart inserted successfully.");
-//   } catch (error) {
-//     console.error("Error inserting seed data:", error);
-//   }
-// };
 
 const seedDatabase = async () => {
   try {
@@ -189,7 +159,6 @@ const seedDatabase = async () => {
     await createTables();
     await insertUsers();
     await insertShoes();
-    // await insertCart();
   } catch (err) {
     throw err;
   } finally {

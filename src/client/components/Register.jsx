@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-const navigate = useNavigate('');
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate("");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -18,10 +17,10 @@ const Register = () => {
 
   const register = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/users/register', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/api/users/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
@@ -29,14 +28,16 @@ const Register = () => {
       if (!response.ok) {
         throw new Error(result.message);
       }
-      // navigate('/login');
-      window.localStorage.setItem('token', result.token);
-      setEmail('');
-      setPassword('');
+      window.localStorage.setItem("token", result.token);
+      setEmail("");
+      setPassword("");
+      setMessage("Thank you for registering!"); 
+      setTimeout(() => {
+        navigate("/login"); 
+      }, 5000); 
     } catch (err) {
       setMessage(err.message);
     }
-    navigate('/login'); // Why you not worky
   };
 
   const handleSubmit = (e) => {
@@ -68,7 +69,9 @@ const Register = () => {
             required
           />
         </div>
-        <button className="register-button" type="submit">Register</button>
+        <button className="register-button" type="submit">
+          Register
+        </button>
       </form>
       <p>{message}</p>
     </div>

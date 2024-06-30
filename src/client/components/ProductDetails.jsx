@@ -64,29 +64,6 @@ const ProductDetails = ({ userId }) => {
     setQuantity(parseInt(event.target.value));
   };
 
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/cart/users/${userId}/items/${shoe.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        setSuccessMessage("Item deleted successfully!");
-        navigate("/");
-      } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || "Failed to delete item");
-      }
-    } catch (error) {
-      setErrorMessage(error.message);
-    }
-  };
-
   return (
     <div className="product-card">
       <div className="product-info">
@@ -105,7 +82,6 @@ const ProductDetails = ({ userId }) => {
           />
         </label>
         <button onClick={handleClick}>Add to Bag</button>
-        <button onClick={handleDelete}>Delete from Cart</button>
         {successMessage && <p>{successMessage}</p>}
         {errorMessage && <p>{errorMessage}</p>}
       </div>

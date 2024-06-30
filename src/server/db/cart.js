@@ -15,7 +15,6 @@ const createOrderItem = async ({ quantity, price, shoe_id, shoe_picture }) => {
     shoe_id,
     shoe_picture,
   ]);
-  // const orderItem = response.rows[0];
   return response.rows[0];
 };
 
@@ -47,8 +46,6 @@ const createCart = async ({ user_id }) => {
     RETURNING *
     `;
   const response = await db.query(SQL, [uuid.v4(), user_id]);
-  // console.log("response:", response);
-  // console.log("response.rows[0]:", response.rows[0]);
   return response.rows[0];
 };
 
@@ -68,10 +65,7 @@ const updateUserCart = async ({ total_price, user_id }) => {
     SET total_price = $2
     WHERE user_id = $1
     `;
-  // const response =
   await db.query(SQL, [uuid.v4(), total_price, user_id]);
-
-  // return response
   console.log("total_price:", total_price);
   console.log("user_id", user_id);
 };

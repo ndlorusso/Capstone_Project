@@ -14,7 +14,6 @@ const SuccessPage = () => {
         <div className="success-page">
             <h1>Thank you for your order!</h1>
             <button onClick={sendMeHome} className="home-button">Contine Shopping</button>
-            <img src="shoevault.jpg"></img>
         </div>
         </>
     );

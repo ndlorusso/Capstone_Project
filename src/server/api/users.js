@@ -1,16 +1,13 @@
 const express = require("express");
 const usersRouter = express.Router();
 const JWT = process.env.JWT;
-// const jwt = require('jsonwebtoken');
 
 const {
   createUser,
   createUserandToken,
   fetchAllUsers,
-  // fetchOneUser,
   authenticateUser,
   findUserByToken,
-  // getUserByEmail
 } = require("../db");
 const { createCart } = require("../db/cart");
 
@@ -25,7 +22,7 @@ const isLoggedIn = async (req, res, next ) => {
   }
 };
 
-// GET ALL USERS - api/users
+
 // <---------------------------  ADMIN SHOULD BE ABLE TO VIEW ALL USERS ---------------------------------------->
 usersRouter.get('/', async (req, res, next) => {
   try {
@@ -45,11 +42,9 @@ usersRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-// WORKS - login user with token
-// /api/users/login
+// LOGIN & AUTHENTICATE
 usersRouter.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
-  // console.log(email, password);
   if (!email || !password) {
     next({
       name: "MissingCredentialsError",
@@ -58,18 +53,13 @@ usersRouter.post('/login', async (req, res, next) => {
   }
   try {
     res.send(await authenticateUser(req.body));
-    //get user cart
   } catch (err) {
     next(err);
   }
-  // createCart();
 });
 
 // CREATE USER
-// /api/users/register
 usersRouter.post("/register", async (req, res, next) => {
-  // const { is_admin , username, email, password } = req.body;
-  // console.log('req.body:', req.body);
   try {
     res.send(await createUserandToken(req.body));
     console.log("req.body:", req.body);

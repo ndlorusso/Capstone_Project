@@ -1,6 +1,7 @@
 import { Routes, Route} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Login from "./components/Login";
+import "./style.css";
 import CartPage from "./components/CartPage";
 import HomePage from "./components/Homepage";
 import NavBar from "./components/NavBar";
@@ -13,8 +14,6 @@ import SuccessPage from "./components/SuccessPage";
 function App() {
   const [userId, setUserId] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [productID, setProductID] = useState(null);
-  // const [shoes, setShoes] = useState([]);
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");

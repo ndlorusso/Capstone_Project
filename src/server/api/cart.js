@@ -38,8 +38,6 @@ cartRouter.get("/users/:id", async (req, res, next) => {
 });
 
 // post shoes to order items
-// /api/cart/users/:id
-//
 cartRouter.post("/users/:id", async (req, res, next) => {
   const { quantity, price, shoe_id } = req.body;
   console.log("are we there yet?"); // not hitting
@@ -85,11 +83,7 @@ cartRouter.delete("/orderItem/:id", async (req, res, next) => {
   }
 });
 
-// CHECKOUT Button
-// ADD orderItems to CART, POST
-// total price, orderItem_id, user_id
 // <----------------------- ADD TO CART ----------------------->
-// /api/cart/:id
 cartRouter.post("/orderItem/:id"),
   async (req, res, next) => {
     const { user_id, orderItem_id, total_price, quantity } = req.body;

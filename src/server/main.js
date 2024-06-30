@@ -25,5 +25,5 @@ app.get("/api/products", async (req, res) => {
 });
 
 viteExpress.listen(app, 3000, () =>
-  console.log("Server is listening on port 3000...")
+  console.log("Server is listening on port 3000 gangstas...")
 );
