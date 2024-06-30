@@ -66,8 +66,6 @@ const updateUserCart = async ({ total_price, user_id }) => {
     WHERE user_id = $1
     `;
   await db.query(SQL, [uuid.v4(), total_price, user_id]);
-  console.log("total_price:", total_price);
-  console.log("user_id", user_id);
 };
 
 const deleteAllOrderItems = async () => {
@@ -77,7 +75,6 @@ const deleteAllOrderItems = async () => {
   RETURNING *
   `;
   const response = await db.query(SQL, [id]);
-  console.log("response:", response);
   return response.rows[0];
 };
 

@@ -35,7 +35,6 @@ usersRouter.get('/', async (req, res, next) => {
 // FIND SPEFIC USER BY ID
 usersRouter.get("/:id", async (req, res, next) => {
   try {
-    // findUserByToken???
     res.send(await findUserByToken(req.params.id));
   } catch (error) {
     next(error);

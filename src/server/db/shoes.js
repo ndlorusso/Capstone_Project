@@ -24,7 +24,6 @@ const fetchOneShoe = async (id) => {
 
 // CREATE FUNCTION - POST ROUTE
 const createShoe = async ({ brand, size, price, color, shoe_picture }) => {
-  //  console.log('hello lincoln');
   const SQL = `--sql
     INSERT INTO shoes(id, brand, size, price, color, shoe_picture)
     VALUES ($1, $2, $3, $4, $5, $6)
@@ -44,13 +43,11 @@ const createShoe = async ({ brand, size, price, color, shoe_picture }) => {
 // <--------------- ADMIN ONLY , NEED TO TEST ----------------->
 // "200 OK" - but no update on DB ?
 const updateShoe = async ({ brand, size, price, color, shoe_picture }) => {
-  // console.log('hello lincoln');
   const SQL = `--sql
   UPDATE shoes 
   SET brand = $1, size = $2, price = $3, color = $4, shoe_picture = $5
   WHERE id = $6
   `;
-  const response =
    await db.query(SQL, [
     uuid.v4(),
     brand,
@@ -59,30 +56,7 @@ const updateShoe = async ({ brand, size, price, color, shoe_picture }) => {
     color,
     shoe_picture
   ]);
-  console.log("response:", response);
-  // return response;
 };
-
-// BRENDAN UPDATE SHOE
-// const updateShoe = async ( { brand, size, price, color, shoe_picture }) => {
-//   const SQL = `--sql
-//     UPDATE shoes
-//     SET brand = $2, size = $3, price = $4, color = $5, shoe_picture = $6
-//     WHERE id = $1
-//     RETURNING *
-//     `;
-//   const response = await db.query(SQL, [
-//     uuid.v4(),
-//     brand,
-//     size,
-//     price,
-//     color,
-//     shoe_picture,
-//   ]);
-//   console.log("response:", response);
-//   // console.log("response:", response.rows[0]);
-//   return response.rows;
-// };
 
 // <--------------- ADMIN ONLY , NEED TO TEST ----------------->
 const deleteShoe = async ({ brand, size, price, color, shoe_picture }) => {
@@ -90,7 +64,6 @@ const deleteShoe = async ({ brand, size, price, color, shoe_picture }) => {
   DELETE FROM shoes
   WHERE id = $1, brand = $2, size = $3, price = $4, color = $5, shoe_picture = $6
   `;
-  console.log("SQL:", SQL);
   const response = 
   await db.query(SQL, [
     uuid.v4(),
@@ -100,7 +73,6 @@ const deleteShoe = async ({ brand, size, price, color, shoe_picture }) => {
     color,
     shoe_picture
   ]);
-  console.log("response:", response);
   return response.rows[0];
 };
 
